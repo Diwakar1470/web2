@@ -1,0 +1,1725 @@
+{
+  "departments_and_classes": {
+    "departments": {
+      "B.A.": [
+        {
+          "id": 1,
+          "code": 11,
+          "name": "Economics",
+          "title": "B.A.-Honours",
+          "shortName": "B.A.-Honours(ECO)",
+          "batch": 2024,
+          "status": "Running"
+        }
+      ],
+      "B.Com.": [
+        {
+          "id": 2,
+          "code": 21,
+          "name": "General",
+          "title": "B.Com.-Honours",
+          "shortName": "B.Com.-Honours(General)",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 3,
+          "code": 22,
+          "name": "Computer Applications-A",
+          "title": "B.Com.-Honours",
+          "shortName": "B.Com.-Honours(CA)-A",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 4,
+          "code": 23,
+          "name": "Computer Applications-B",
+          "title": "B.Com.-Honours",
+          "shortName": "B.Com.-Honours(CA)-B",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 5,
+          "code": 24,
+          "name": "Computer Applications-C",
+          "title": "B.Com.-Honours",
+          "shortName": "B.Com.-Honours(CA)-C",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 6,
+          "code": 25,
+          "name": "Tax Procedures and Practice",
+          "title": "B.Com.-Honours",
+          "shortName": "B.Com.-Honours(TPP)",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 7,
+          "code": 26,
+          "name": "Finance",
+          "title": "B.Com.-Honours",
+          "shortName": "B.Com.-Honours(Finance)",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 8,
+          "code": 27,
+          "name": "Business Process Management",
+          "title": "B.Com.-Honours",
+          "shortName": "B.Com.-Honours(BPM)",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 9,
+          "code": 28,
+          "name": "Banking",
+          "title": "B.Com.-Honours",
+          "shortName": "B.Com.-Honours(Banking)",
+          "batch": 2024,
+          "status": "Running"
+        }
+      ],
+      "B.B.A.": [
+        {
+          "id": 10,
+          "code": 31,
+          "name": "A",
+          "title": "B.B.A.-Honours",
+          "shortName": "B.B.A.-Honours-A",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 11,
+          "code": 32,
+          "name": "B",
+          "title": "B.B.A.-Honours",
+          "shortName": "B.B.A.-Honours-B",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 12,
+          "code": 33,
+          "name": "Business Analytics",
+          "title": "B.B.A.-Honours",
+          "shortName": "B.B.A.-Honours(BA)",
+          "batch": 2024,
+          "status": "Running"
+        }
+      ],
+      "B.C.A.": [
+        {
+          "id": 13,
+          "code": 41,
+          "name": "A",
+          "title": "B.C.A.-Honours",
+          "shortName": "B.C.A.-Honours-A",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 14,
+          "code": 42,
+          "name": "B",
+          "title": "B.C.A.-Honours",
+          "shortName": "B.C.A.-Honours-B",
+          "batch": 2024,
+          "status": "Running"
+        }
+      ],
+      "B.Sc.": [
+        {
+          "id": 15,
+          "code": 51,
+          "name": "Botany",
+          "title": "B.Sc.-Honours",
+          "shortName": "B.Sc.-Honours(BOT)",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 16,
+          "code": 52,
+          "name": "Zoology",
+          "title": "B.Sc.-Honours",
+          "shortName": "B.Sc.-Honours(ZOO)",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 17,
+          "code": 61,
+          "name": "Mathematics",
+          "title": "B.Sc.-Honours",
+          "shortName": "B.Sc.-Honours(MAT)",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 18,
+          "code": 62,
+          "name": "Chemistry",
+          "title": "B.Sc.-Honours",
+          "shortName": "B.Sc.-Honours(CHE)",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 19,
+          "code": 63,
+          "name": "Physics",
+          "title": "B.Sc.-Honours",
+          "shortName": "B.Sc.-Honours(PHY)",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 20,
+          "code": 64,
+          "name": "Electronics",
+          "title": "B.Sc.-Honours",
+          "shortName": "B.Sc.-Honours(ELE)",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 21,
+          "code": 65,
+          "name": "Statistics",
+          "title": "B.Sc.-Honours",
+          "shortName": "B.Sc.-Honours(STA)",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 22,
+          "code": 71,
+          "name": "Computer Science-A",
+          "title": "B.Sc.-Honours",
+          "shortName": "B.Sc.-Honours(CSC)-A",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 23,
+          "code": 72,
+          "name": "Computer Science-B",
+          "title": "B.Sc.-Honours",
+          "shortName": "B.Sc.-Honours(CSC)-B",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 24,
+          "code": 73,
+          "name": "Computer Science-C",
+          "title": "B.Sc.-Honours",
+          "shortName": "B.Sc.-Honours(CSC)-C",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 25,
+          "code": 74,
+          "name": "Data Science",
+          "title": "B.Sc.-Honours",
+          "shortName": "B.Sc.-Honours(DS)",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 26,
+          "code": 75,
+          "name": "Data Analytics",
+          "title": "B.Sc.-Honours",
+          "shortName": "B.Sc.-Honours(DA)",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 27,
+          "code": 76,
+          "name": "Computer Science and Cognitive Systems",
+          "title": "B.Sc.-Honours",
+          "shortName": "B.Sc.-Honours(CSCS)",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 28,
+          "code": 77,
+          "name": "Artificial Intelligence",
+          "title": "B.Sc.-Honours",
+          "shortName": "B.Sc.-Honours(AI)",
+          "batch": 2024,
+          "status": "Running"
+        },
+        {
+          "id": 29,
+          "code": 53,
+          "name": "Bio-Technology",
+          "title": "B.Sc.-Honours",
+          "shortName": "B.Sc.-Honours(BTH)",
+          "batch": 2024,
+          "status": "Running"
+        }
+      ]
+    },
+    "total_departments": 5,
+    "total_classes": 29
+  },
+  "faculty_by_department": {
+    "faculty_by_department": {
+      "ENG": [
+        {
+          "userId": 2,
+          "empId": "2001",
+          "name": "Sri K.Perachary",
+          "designation": "Assistant Professor",
+          "mobile": "9963043362",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 4,
+          "empId": "2003",
+          "name": "Smt.Ch.Anantha Sai Lakshmi",
+          "designation": "Assistant Professor",
+          "mobile": "9948616807",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 41,
+          "empId": "3027",
+          "name": "Dr.Ch. Rajeswari",
+          "designation": "Assistant Professor",
+          "mobile": "9490020100",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 69,
+          "empId": "3083",
+          "name": "Sri S.Gopala Rao",
+          "designation": "Lecturer",
+          "mobile": "9133002095",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 70,
+          "empId": "3087",
+          "name": "Smt.K.Swarupa Rani",
+          "designation": "Lecturer",
+          "mobile": "9963288799",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 76,
+          "empId": "3099",
+          "name": "Sri A. Anil Kumar",
+          "designation": "Lecturer",
+          "mobile": "8008250246/ 9030981510",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 100,
+          "empId": "3131",
+          "name": "Sri K.Emmaniele",
+          "designation": "Lecturer",
+          "mobile": "8840612323",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 110,
+          "empId": "3157",
+          "name": "Smt.V.Bhanu Nareesha",
+          "designation": "Lecturer",
+          "mobile": "9160881945",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 139,
+          "empId": "5011",
+          "name": "Dr.G.Srilatha",
+          "designation": "Associate Professor, HoD",
+          "mobile": "9030777264",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 140,
+          "empId": "5012",
+          "name": "Dr.K.Santha Kumari",
+          "designation": "Assistant Professor",
+          "mobile": "7893633303",
+          "email": "",
+          "type": "UG"
+        }
+      ],
+      "Admin": [
+        {
+          "userId": 3,
+          "empId": "2002",
+          "name": "Sri V.Babu Rao",
+          "designation": "Director & HoD Zoology",
+          "mobile": "9948221110",
+          "email": "",
+          "type": ""
+        },
+        {
+          "userId": 32,
+          "empId": "3000",
+          "name": "Dr.M.Ramesh",
+          "designation": "Principal & HoD Economics",
+          "mobile": "9989616969",
+          "email": "",
+          "type": ""
+        }
+      ],
+      "TEL": [
+        {
+          "userId": 5,
+          "empId": "2004",
+          "name": "Dr.Y.Purna Chandra Rao",
+          "designation": "Assistant Professor",
+          "mobile": "9294005664",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 103,
+          "empId": "3134",
+          "name": "Dr.N.Satya Srinivasu",
+          "designation": "Assistant Professor",
+          "mobile": "9494430304/\n9989844001",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 130,
+          "empId": "3177",
+          "name": "Dr.P.Bala Durga Vara Prasad",
+          "designation": "Lecturer",
+          "mobile": "7013643274",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 132,
+          "empId": "3179",
+          "name": "Dr.K.Hemabandhavi",
+          "designation": "Lecturer",
+          "mobile": "9701818859",
+          "email": "",
+          "type": "UG"
+        }
+      ],
+      "MAT": [
+        {
+          "userId": 6,
+          "empId": "2007",
+          "name": "Smt.M.Venkata Ramana",
+          "designation": "Assistant Professor",
+          "mobile": "9908538081",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 7,
+          "empId": "2008",
+          "name": "Sri A.Venkatesh",
+          "designation": "Assistant Professor",
+          "mobile": "9848683512",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 8,
+          "empId": "2010",
+          "name": "Smt.K.Anupama",
+          "designation": "Assistant Professor",
+          "mobile": "9177756173",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 29,
+          "empId": "2058",
+          "name": "Sri Ch.Syambabu",
+          "designation": "Assistant Professor",
+          "mobile": "7674004385",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 33,
+          "empId": "3004",
+          "name": "Smt.S.Siva Naga Lakshmi",
+          "designation": "Assistant Professor",
+          "mobile": "9703315452",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 51,
+          "empId": "3052",
+          "name": "Sri Y.Sai Subrahmanyam",
+          "designation": "Assistant Professor",
+          "mobile": "8099045669",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 52,
+          "empId": "3054",
+          "name": "Dr.Maganti.V.V.N.L. Sudha Rani",
+          "designation": "Assistant Professor",
+          "mobile": "9247834748",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 64,
+          "empId": "3077",
+          "name": "Smt.J.Nirmala",
+          "designation": "Lecturer",
+          "mobile": "9912572525",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 68,
+          "empId": "3082",
+          "name": "Sri Y.Ravi Babu",
+          "designation": "Lecturer",
+          "mobile": "9000645846",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 141,
+          "empId": "5014",
+          "name": "Sri I.V.Venkateswara Rao",
+          "designation": "Sr.Assistant Professor, HoD",
+          "mobile": "9866007876",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 142,
+          "empId": "5015",
+          "name": "Dr.J.L.Rama Prasad",
+          "designation": "Assistant Professor,  Dy HoD",
+          "mobile": "9441175955",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 143,
+          "empId": "5016",
+          "name": "Dr.T.Anuradha",
+          "designation": "Assistant Professor",
+          "mobile": "9160911922",
+          "email": "",
+          "type": "PG"
+        }
+      ],
+      "STA": [
+        {
+          "userId": 9,
+          "empId": "2011",
+          "name": "Sri G.Chakravarthi",
+          "designation": "Assistant Professor, HoD",
+          "mobile": "9985544990",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 10,
+          "empId": "2012",
+          "name": "Sri E.Murali Krishna",
+          "designation": "Assistant Professor",
+          "mobile": "9985401979",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 11,
+          "empId": "2013",
+          "name": "Sri A.Balaji",
+          "designation": "Assistant Professor",
+          "mobile": "9573405897",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 44,
+          "empId": "3034",
+          "name": "Sri K.Siva Naga Raju",
+          "designation": "Assistant Professor",
+          "mobile": "8074234777",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 45,
+          "empId": "3036",
+          "name": "Sri N.Rakesh",
+          "designation": "Assistant Professor",
+          "mobile": "9059548851",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 54,
+          "empId": "3059",
+          "name": "Ms.Kodali Divya",
+          "designation": "Assistant Professor",
+          "mobile": "8978246421",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 58,
+          "empId": "3065",
+          "name": "Smt.M.Siva Parvathi",
+          "designation": "Lecturer",
+          "mobile": "8143569429",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 66,
+          "empId": "3079",
+          "name": "Smt.G.Bhargavi",
+          "designation": "Lecturer",
+          "mobile": "9985841457",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 89,
+          "empId": "3119",
+          "name": "Smt K.Neelima",
+          "designation": "Lecturer",
+          "mobile": "9030250315",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 119,
+          "empId": "3166",
+          "name": "Smt.R.Gayathri Mallika",
+          "designation": "Lecturer",
+          "mobile": "8903296807",
+          "email": "",
+          "type": "UG"
+        }
+      ],
+      "ELE": [
+        {
+          "userId": 12,
+          "empId": "2014",
+          "name": "Sri K.S.V.Samba Siva Rao",
+          "designation": "Assistant Professor, HoD",
+          "mobile": "9441469690",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 35,
+          "empId": "3013",
+          "name": "Sri D.Srinivasa Reddy",
+          "designation": "Assistant Professor",
+          "mobile": "9866299856",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 36,
+          "empId": "3014",
+          "name": "Ms.G.Naga Sasanka",
+          "designation": "Assistant Professor",
+          "mobile": "8074498432",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 111,
+          "empId": "3158",
+          "name": "Dr.G.Nagaraju",
+          "designation": "Lecturer",
+          "mobile": "9491342882",
+          "email": "",
+          "type": "UG"
+        }
+      ],
+      "CSC": [
+        {
+          "userId": 13,
+          "empId": "2020",
+          "name": "Sri K.Sridhar",
+          "designation": "Assistant Professor",
+          "mobile": "9849965036",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 14,
+          "empId": "2022",
+          "name": "Sri R.Gopi",
+          "designation": "Assistant Professor",
+          "mobile": "9989705675",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 15,
+          "empId": "2023",
+          "name": "Sri S.Rajesh",
+          "designation": "Assistant Professor",
+          "mobile": "9502474508",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 16,
+          "empId": "2027",
+          "name": "Smt.Y.J.N.Lakshmi",
+          "designation": "Assistant Professor",
+          "mobile": "9052341968",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 17,
+          "empId": "2028",
+          "name": "Sri K.Sudhir",
+          "designation": "Assistanrt Professor, Dy HoD",
+          "mobile": "9603298396",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 18,
+          "empId": "2031",
+          "name": "Smt.V.Jhansi Laskhmi",
+          "designation": "Assistant Professor",
+          "mobile": "9246418242",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 37,
+          "empId": "3015",
+          "name": "Sri E.V.V.S. Siva Kumar",
+          "designation": "Assistant Professor",
+          "mobile": "9182064238",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 38,
+          "empId": "3021",
+          "name": "Sri K.Veerendranadh",
+          "designation": "Assistant Professor",
+          "mobile": "9989462656",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 47,
+          "empId": "3041",
+          "name": "Sri K.Ravi Shankar",
+          "designation": "Assistant Professor",
+          "mobile": "9390687525",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 48,
+          "empId": "3043",
+          "name": "Smt.Magam Vijitha",
+          "designation": "Assistant Professor",
+          "mobile": "9912325426",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 56,
+          "empId": "3062",
+          "name": "Smt.Sk.John Bee",
+          "designation": "Assistant Professor",
+          "mobile": "8686711904",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 61,
+          "empId": "3071",
+          "name": "Ms.V.Sree Rekha",
+          "designation": "Lecturer",
+          "mobile": "9959089041",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 62,
+          "empId": "3073",
+          "name": "Smt.B.Roja Priscilla",
+          "designation": "Lecturer",
+          "mobile": "9949543216",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 71,
+          "empId": "3092",
+          "name": "Smt.Ch.Venkata Deepika",
+          "designation": "Lecturer",
+          "mobile": "8977516656",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 78,
+          "empId": "3103",
+          "name": "Ms.K.Bhuvaneswari",
+          "designation": "Lecturer",
+          "mobile": "8247493147",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 79,
+          "empId": "3104",
+          "name": "Ms.D.Sri Naga Prasanna",
+          "designation": "Lecturer",
+          "mobile": "8790154520",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 81,
+          "empId": "3107",
+          "name": "Ms.K.Vani",
+          "designation": "Lecturer",
+          "mobile": "6305187790",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 83,
+          "empId": "3112",
+          "name": "Ms.B.Harshitha Reddy",
+          "designation": "Lecturer",
+          "mobile": "8500996365",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 84,
+          "empId": "3113",
+          "name": "Ms.P.Devika",
+          "designation": "Lecturer",
+          "mobile": "9030689396",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 85,
+          "empId": "3114",
+          "name": "Ms.S.Meghana Naga Durga",
+          "designation": "Lecturer",
+          "mobile": "7672061186",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 86,
+          "empId": "3115",
+          "name": "Ms.M.Indrani",
+          "designation": "Lecturer",
+          "mobile": "7337295853",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 92,
+          "empId": "3123",
+          "name": "Sri B.Prasanth",
+          "designation": "Lecturer",
+          "mobile": "9553878437",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 98,
+          "empId": "3129",
+          "name": "Smt.Ch.Kavya",
+          "designation": "Lecturer",
+          "mobile": "7995247084",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 106,
+          "empId": "3153",
+          "name": "Dr.Y.Srinivasa Rao",
+          "designation": "Assistant Professor",
+          "mobile": "9705640878",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 113,
+          "empId": "3160",
+          "name": "Ms.Sk.Rajiya Sulthana",
+          "designation": "Lecturer",
+          "mobile": "9398281458",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 114,
+          "empId": "3161",
+          "name": "Ms.K.Naga Jyostna",
+          "designation": "Lecturer",
+          "mobile": "7989781937",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 117,
+          "empId": "3164",
+          "name": "Smt.N.Lakshmi Kumari",
+          "designation": "Lecturer",
+          "mobile": "6304787908",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 120,
+          "empId": "3167",
+          "name": "Ms.Sk.Parveena",
+          "designation": "Lecturer",
+          "mobile": "8790120454",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 121,
+          "empId": "3168",
+          "name": "Ms.P.Daathri Sreevalli",
+          "designation": "Lecturer",
+          "mobile": "9397952516",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 144,
+          "empId": "5018",
+          "name": "Dr.T.S.Ravi kiran",
+          "designation": "Associate Professor, HoD",
+          "mobile": "9441176980",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 145,
+          "empId": "5022",
+          "name": "Ms.K.Priya",
+          "designation": "Assistant Professor",
+          "mobile": "7989782245",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 146,
+          "empId": "5023",
+          "name": "Smt.A.Kavitha",
+          "designation": "Assistant Professor",
+          "mobile": "9493486272",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 155,
+          "empId": "5035",
+          "name": "Sri G.Samrat Krishna",
+          "designation": "Assistant Professor",
+          "mobile": "9177937461",
+          "email": "",
+          "type": "PG"
+        }
+      ],
+      "BBA": [
+        {
+          "userId": 19,
+          "empId": "2032",
+          "name": "Sri K.V.Ramesh Chandra",
+          "designation": "Assistant Professor,  Dy HoD",
+          "mobile": "9440056690",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 20,
+          "empId": "2034",
+          "name": "Sri K.Vijay",
+          "designation": "Assistant Professor",
+          "mobile": "9700069345",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 72,
+          "empId": "3094",
+          "name": "Dr.K.Srinivasulu",
+          "designation": "Assistant Professor",
+          "mobile": "9441210174",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 73,
+          "empId": "3095",
+          "name": "Sri P.Kishore",
+          "designation": "Assistant Professor",
+          "mobile": "9492884775",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 101,
+          "empId": "3132",
+          "name": "Smt.B.Shalini",
+          "designation": "Assistant Professor",
+          "mobile": "9032265969",
+          "email": "",
+          "type": "UG"
+        }
+      ],
+      "COM": [
+        {
+          "userId": 21,
+          "empId": "2035",
+          "name": "Sri K.Narayana Rao",
+          "designation": "Assistant Professor, HoD",
+          "mobile": "9885038196",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 22,
+          "empId": "2036",
+          "name": "Sri P.Subhakar",
+          "designation": "Assistant Professor",
+          "mobile": "9866007756",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 23,
+          "empId": "2038",
+          "name": "Sri VVK.Dharmendra",
+          "designation": "Assistant Professor",
+          "mobile": "9052377750",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 24,
+          "empId": "2040",
+          "name": "Smt.E.Suvarnanjali",
+          "designation": "Assistant Professor",
+          "mobile": "9493248821",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 25,
+          "empId": "2041",
+          "name": "Smt.M.Siva Ranjani",
+          "designation": "Assistant Professor",
+          "mobile": "9000870738",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 26,
+          "empId": "2044",
+          "name": "Dr.A.N.V.Durga Anupama",
+          "designation": "Assistant Professor",
+          "mobile": "9949017195",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 40,
+          "empId": "3025",
+          "name": "Smt.O.Padmaja",
+          "designation": "Assistant Professor",
+          "mobile": "9010709173",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 42,
+          "empId": "3029",
+          "name": "Sri B.Phani Krishna",
+          "designation": "Assistant Professor",
+          "mobile": "8143375795",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 49,
+          "empId": "3047",
+          "name": "Sri T. Srinivasa Rao",
+          "designation": "Assistant Professor",
+          "mobile": "9533866466",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 50,
+          "empId": "3048",
+          "name": "Dr.V.Srinivas",
+          "designation": "Assistant Professor",
+          "mobile": "8374884565",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 53,
+          "empId": "3055",
+          "name": "Dr.B.Sankar Babu",
+          "designation": "Assistant Professor",
+          "mobile": "9346487036",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 67,
+          "empId": "3080",
+          "name": "Dr.M.V.Srinivasa Rao",
+          "designation": "Assistant Professor",
+          "mobile": "9949893984",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 75,
+          "empId": "3098",
+          "name": "Dr.M.Venkateswara Rao",
+          "designation": "Assistant Professor",
+          "mobile": "8985664969",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 77,
+          "empId": "3100",
+          "name": "Dr.M.Hanumaiah",
+          "designation": "Assistant Professor",
+          "mobile": "9441077625",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 87,
+          "empId": "3116",
+          "name": "Smt.G.Vasudha",
+          "designation": "Assistant Professor",
+          "mobile": "9492711770",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 88,
+          "empId": "3117",
+          "name": "Ms.P.Sai Lakshmi Aparna Devi",
+          "designation": "Assistant Professor",
+          "mobile": "9885950367",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 90,
+          "empId": "3120",
+          "name": "Dr.G.V.S.R.S.A.Sastry",
+          "designation": "Assistant Professor",
+          "mobile": "9440262471",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 105,
+          "empId": "3152",
+          "name": "Smt.Kanaka Durga.S",
+          "designation": "Assistant Professor",
+          "mobile": "9703133456",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 118,
+          "empId": "3165",
+          "name": "Smt.V.Kalpana",
+          "designation": "Lecturer",
+          "mobile": "9989410208",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 122,
+          "empId": "3169",
+          "name": "Dr.P.Sudarshan",
+          "designation": "Lecturer",
+          "mobile": "9110330742",
+          "email": "",
+          "type": "UG"
+        }
+      ],
+      "BOT": [
+        {
+          "userId": 27,
+          "empId": "2048",
+          "name": "Smt.D.Sravani",
+          "designation": "Assistant Professor",
+          "mobile": "8919541284",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 59,
+          "empId": "3068",
+          "name": "Dr.P.Srinivasa Rao",
+          "designation": "Assistant Professor, HoD",
+          "mobile": "9440609508",
+          "email": "",
+          "type": "UG"
+        }
+      ],
+      "LIB": [
+        {
+          "userId": 28,
+          "empId": "2049",
+          "name": "Smt.K.Vanisree",
+          "designation": "Assistant Professor",
+          "mobile": "9849031571",
+          "email": "",
+          "type": "UG"
+        }
+      ],
+      "CHE": [
+        {
+          "userId": 30,
+          "empId": "2060",
+          "name": "Sri E.Nagarjuna Babu",
+          "designation": "Assistant Professor",
+          "mobile": "7207227637",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 95,
+          "empId": "3126",
+          "name": "Dr.A.Rama Rao",
+          "designation": "Assistant Professor",
+          "mobile": "9701651461",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 97,
+          "empId": "3128",
+          "name": "Dr.D.Srilaxmi",
+          "designation": "Assistant Professor",
+          "mobile": "9989633788",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 147,
+          "empId": "5026",
+          "name": "Dr.M.Manoranjani",
+          "designation": "Associate Professor, Vice Principal & HoD",
+          "mobile": "9866046499",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 148,
+          "empId": "5027",
+          "name": "Dr.M.David Raju",
+          "designation": "Associate Professor",
+          "mobile": "9963036641",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 149,
+          "empId": "5028",
+          "name": "Dr.T.N.V.S.S.Satya Dev",
+          "designation": "Assistant Professor",
+          "mobile": "9440261355",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 150,
+          "empId": "5029",
+          "name": "Dr.P.T.S.R.K.Prasada Rao",
+          "designation": "Assistanrt Professor, Dy HoD",
+          "mobile": "9440179927",
+          "email": "",
+          "type": "UG"
+        }
+      ],
+      "ECO": [
+        {
+          "userId": 31,
+          "empId": "2070",
+          "name": "Dr.Ch.V.Rohini Kusuma",
+          "designation": "Assistant Professor",
+          "mobile": "9848231214",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 112,
+          "empId": "3159",
+          "name": "Sri S.Suresh Kumar",
+          "designation": "Lecturer",
+          "mobile": "7989001126",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 127,
+          "empId": "3174",
+          "name": "Poulomi Khasnobis",
+          "designation": "Lecturer",
+          "mobile": "6289893417",
+          "email": "",
+          "type": "UG"
+        }
+      ],
+      "PHY": [
+        {
+          "userId": 34,
+          "empId": "3011",
+          "name": "Dr.T.S.Krishna",
+          "designation": "Assistant Professor, HoD",
+          "mobile": "9700003993",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 55,
+          "empId": "3061",
+          "name": "Dr.Sk.Khaja Muswareen",
+          "designation": "Assistant Professor",
+          "mobile": "9494698368",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 63,
+          "empId": "3076",
+          "name": "Sri J.Panduranga Rao",
+          "designation": "Lecturer",
+          "mobile": "9441176794",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 96,
+          "empId": "3127",
+          "name": "Ms.T.Poojitha",
+          "designation": "Lecturer",
+          "mobile": "7799467493",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 151,
+          "empId": "5030",
+          "name": "Dr. M.Tasneem",
+          "designation": "Assistanrt Professor, Dy HoD",
+          "mobile": "9440494555/ 9441518746",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 152,
+          "empId": "5031",
+          "name": "Dr.S.Vijaya Krishna",
+          "designation": "Assistant Professor",
+          "mobile": "9000430219",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 153,
+          "empId": "5032",
+          "name": "Sri N.Raja Sekhar",
+          "designation": "Assistant Professor",
+          "mobile": "9494531911",
+          "email": "",
+          "type": "UG"
+        }
+      ],
+      "MBABA": [
+        {
+          "userId": 39,
+          "empId": "3023",
+          "name": "Dr.P.Guru Prasad",
+          "designation": "Assistant Professor",
+          "mobile": "8686208686",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 94,
+          "empId": "3125",
+          "name": "Smt.Naziya Sulthana",
+          "designation": "Assistant Professor",
+          "mobile": "8019564784",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 107,
+          "empId": "3154",
+          "name": "Sri.S.Siva Naga Sai Mohan",
+          "designation": "Assistant Professor",
+          "mobile": "8985353103",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 128,
+          "empId": "3175",
+          "name": "Ms.Ch.Keerthana",
+          "designation": "Lecturer",
+          "mobile": "8074554567",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 129,
+          "empId": "3176",
+          "name": "Ms.D.Sangeetha",
+          "designation": "Lecturer",
+          "mobile": "9110710396",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 135,
+          "empId": "5003",
+          "name": "Dr.B.Jaya Prakash",
+          "designation": "Associate Professor, HoD",
+          "mobile": "9849813969",
+          "email": "",
+          "type": "PG"
+        }
+      ],
+      "ZOO": [
+        {
+          "userId": 43,
+          "empId": "3032",
+          "name": "Dr.A.Samba Naik",
+          "designation": "Assistant Professor",
+          "mobile": "9346857782",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 82,
+          "empId": "3109",
+          "name": "Smt.Ch.Sirisha",
+          "designation": "Assistant Professor",
+          "mobile": "9553896951",
+          "email": "",
+          "type": "UG"
+        }
+      ],
+      "BBABA": [
+        {
+          "userId": 46,
+          "empId": "3037",
+          "name": "Sri D.Vasu",
+          "designation": "Assistant Professor,  Dy HoD",
+          "mobile": "8885869995",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 65,
+          "empId": "3078",
+          "name": "Smt.Ch.Hanuman Jyothi",
+          "designation": "Assistant Professor",
+          "mobile": "9848104569",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 74,
+          "empId": "3096",
+          "name": "Sri Bonthula Sai Ram",
+          "designation": "Assistant Professor",
+          "mobile": "9985673636",
+          "email": "",
+          "type": "UG"
+        }
+      ],
+      "PED": [
+        {
+          "userId": 57,
+          "empId": "3064",
+          "name": "Smt.N.Sharmila",
+          "designation": "Assistant Professor",
+          "mobile": "9533271625",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 99,
+          "empId": "3130",
+          "name": "Dr.T.V.Bala Krishna Reddy",
+          "designation": "Assistant Professor, HoD",
+          "mobile": "9963992102",
+          "email": "",
+          "type": "UG"
+        }
+      ],
+      "DSAI": [
+        {
+          "userId": 60,
+          "empId": "3069",
+          "name": "Dr.K.Udaya Sri",
+          "designation": "Assistant Professor, HoD",
+          "mobile": "9490965267",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 80,
+          "empId": "3105",
+          "name": "Ms.Ch.Sowmya",
+          "designation": "Lecturer",
+          "mobile": "7893317686",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 91,
+          "empId": "3121",
+          "name": "Smt.V.Samhita Reddy",
+          "designation": "Lecturer",
+          "mobile": "7290079995",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 104,
+          "empId": "3150",
+          "name": "Ms.I.Swetha",
+          "designation": "Lecturer",
+          "mobile": "8125409914",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 108,
+          "empId": "3155",
+          "name": "Ms.Ch.Yoga Sri Rajya Lakshmi",
+          "designation": "Lecturer",
+          "mobile": "9542742598",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 115,
+          "empId": "3162",
+          "name": "Sk.Raheem",
+          "designation": "Lecturer",
+          "mobile": "9494814414",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 116,
+          "empId": "3163",
+          "name": "M.Sravani",
+          "designation": "Lecturer",
+          "mobile": "7702901977",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 123,
+          "empId": "3170",
+          "name": "Sumith Roy",
+          "designation": "Lecturer",
+          "mobile": "7989429370",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 125,
+          "empId": "3172",
+          "name": "Ms.K.Neelima",
+          "designation": "Lecturer",
+          "mobile": "6301077312",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 126,
+          "empId": "3173",
+          "name": "Ms.Ayesha Begum",
+          "designation": "Lecturer",
+          "mobile": "9963447386",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 133,
+          "empId": "4048",
+          "name": "Ms.J.Revathi",
+          "designation": "Lecturer",
+          "mobile": "9705201910",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 156,
+          "empId": "6027",
+          "name": "Smt.K.Gayathri",
+          "designation": "Lecturer",
+          "mobile": "8639765098",
+          "email": "",
+          "type": "PG"
+        }
+      ],
+      "BTE": [
+        {
+          "userId": 93,
+          "empId": "4068",
+          "name": "Smt.P.Lalitha Priyanka",
+          "designation": "Assistant Professor",
+          "mobile": "8686797932",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 109,
+          "empId": "3156",
+          "name": "Dr.K.Ratna Kumari",
+          "designation": "Lecturer",
+          "mobile": "6301372173",
+          "email": "",
+          "type": "UG"
+        }
+      ],
+      "MBA": [
+        {
+          "userId": 102,
+          "empId": "3133",
+          "name": "Dr.K.S.Arun Kumar",
+          "designation": "Assistant Professor",
+          "mobile": "9849090597/\n9609140273",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 134,
+          "empId": "5002",
+          "name": "Prof.Rajesh C Jampala",
+          "designation": "Professor, Dean(Academics) & HoD",
+          "mobile": "9866806069",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 136,
+          "empId": "5004",
+          "name": "Dr.R.Srinivasa Rao",
+          "designation": "Associate Professor",
+          "mobile": "9849613143",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 137,
+          "empId": "5005",
+          "name": "Dr.S.B.Rajendra Prasad",
+          "designation": "Associate Professor",
+          "mobile": "9440210697",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 138,
+          "empId": "5007",
+          "name": "Dr.MD.S.Rahaman",
+          "designation": "Assistant Professor",
+          "mobile": "9866965767",
+          "email": "",
+          "type": "PG"
+        },
+        {
+          "userId": 154,
+          "empId": "5034",
+          "name": "Smt.A.Siva Naga Lakshmi",
+          "designation": "Assistant Professor",
+          "mobile": "9848919197",
+          "email": "",
+          "type": "PG"
+        }
+      ],
+      "HIN": [
+        {
+          "userId": 124,
+          "empId": "3171",
+          "name": "Sri K.Pruthvi",
+          "designation": "Lecturer",
+          "mobile": "8008317899",
+          "email": "",
+          "type": "UG"
+        },
+        {
+          "userId": 131,
+          "empId": "3178",
+          "name": "Dr.B.Geethika Sruthi",
+          "designation": "Lecturer",
+          "mobile": "8790591708",
+          "email": "",
+          "type": "UG"
+        }
+      ]
+    },
+    "total_departments": 22,
+    "total_faculty": 155
+  },
+  "exported_at": "2026-01-02T12:45:10.515218"
+}
