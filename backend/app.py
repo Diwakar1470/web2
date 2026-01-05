@@ -451,7 +451,7 @@ def health():
 # Authentication Endpoints
 @app.route('/api/auth/student', methods=['POST'])
 def auth_student():
-    """Student authentication endpoint - fetch from unified users table"""
+    """Student authentication endpoint - checks both unified users table and legacy students table"""
     payload = request.get_json(silent=True) or {}
     email = payload.get('email', '').strip().lower()
     admission_id = payload.get('admissionId', '').strip()
@@ -459,7 +459,7 @@ def auth_student():
     if not email or not admission_id:
         return jsonify({"error": "Email and admission ID are required"}), 400
     
-    # Find student in new users table by role and verify both email and admission ID
+    # First check: Look in new unified users table
     user = User.query.filter(
         User.email.ilike(email),
         User.employee_id == admission_id,
@@ -478,6 +478,23 @@ def auth_student():
                     "role": role.name
                 }
             })
+    
+    # Second check: Look in legacy students table (for backward compatibility)
+    student = Student.query.filter_by(lookup_key=email).first()
+    if student:
+        # Extract student name from profile or use email
+        profile = student.profile or {}
+        student_name = profile.get('studentName', email.split('@')[0])
+        
+        return jsonify({
+            "success": True,
+            "student": {
+                "name": student_name,
+                "email": email,
+                "admissionId": admission_id,
+                "role": "STUDENT"
+            }
+        })
     
     return jsonify({"error": "Student not found"}), 404
 
