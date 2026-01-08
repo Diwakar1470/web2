@@ -6,6 +6,7 @@ from sqlalchemy.dialects.postgresql import JSON
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 from functools import wraps
+from werkzeug.utils import secure_filename
 import bcrypt
 import secrets
 
@@ -14,6 +15,7 @@ load_dotenv()
 APP_DIR = os.path.dirname(os.path.abspath(__file__))
 PARENT_DIR = os.path.dirname(APP_DIR)
 WEB_DIR = os.path.join(PARENT_DIR, 'web')
+UPLOAD_FOLDER = os.path.join(APP_DIR, 'uploads')
 
 app = Flask(__name__, static_folder=WEB_DIR, static_url_path='')
 CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
@@ -23,6 +25,17 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', secrets.token_hex(32))
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=24)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB limit
+
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # Database Configuration from environment variables
 db_user = os.getenv('DB_USER', 'postgres')
@@ -130,9 +143,15 @@ class User(db.Model):
     address = db.Column(db.Text)
     profile_photo = db.Column(db.String(500))
     
+    # HOD/Faculty Professional Information
+    specialization = db.Column(db.String(255))
+    qualifications = db.Column(db.String(255))
+    bio = db.Column(db.Text)
+    
     # Profile completion tracking
     profile_completed = db.Column(db.Boolean, default=False)
     is_temp_password = db.Column(db.Boolean, default=True)
+    registration_status = db.Column(db.String(20), default='PENDING') # 'PENDING', 'APPROVED', 'REJECTED'
     
     # Metadata
     is_active = db.Column(db.Boolean, default=True)
@@ -164,8 +183,12 @@ class User(db.Model):
             'bloodGroup': self.blood_group,
             'address': self.address,
             'profilePhoto': self.profile_photo,
+            'specialization': self.specialization,
+            'qualifications': self.qualifications,
+            'bio': self.bio,
             'profileCompleted': self.profile_completed,
             'isTempPassword': self.is_temp_password,
+            'registrationStatus': self.registration_status,
             'isActive': self.is_active,
             'lastLogin': self.last_login.isoformat() if self.last_login else None,
             'createdAt': self.created_at.isoformat() if self.created_at else None
@@ -451,18 +474,41 @@ def health():
 # Authentication Endpoints
 @app.route('/api/auth/student', methods=['POST'])
 def auth_student():
-    """Student authentication endpoint - checks both unified users table and legacy students table"""
+    """Student authentication endpoint - fetch from students table using roll number"""
     payload = request.get_json(silent=True) or {}
-    email = payload.get('email', '').strip().lower()
-    admission_id = payload.get('admissionId', '').strip()
+    roll_number = payload.get('rollNumber', '').strip().lower()
     
-    if not email or not admission_id:
-        return jsonify({"error": "Email and admission ID are required"}), 400
+    # Fallback for old requests or those passing email as roll number
+    if not roll_number:
+        email = payload.get('email', '').strip().lower()
+        if email:
+            roll_number = email.split('@')[0]
+            
+    if not roll_number:
+        return jsonify({"error": "Roll number is required"}), 400
     
-    # First check: Look in new unified users table
+    # Check in students table (where we imported CSV data)
+    student = Student.query.filter_by(lookup_key=roll_number).first()
+    if student:
+        # Extract student name from profile or use roll number
+        profile = student.profile or {}
+        student_name = profile.get('studentName', roll_number)
+        
+        return jsonify({
+            "success": True,
+            "student": {
+                "name": student_name,
+                "rollNo": roll_number,
+                "email": f"{roll_number}@pbsiddhartha.ac.in",
+                "department": student.department,
+                "role": "STUDENT",
+                "profile": profile
+            }
+        })
+    
+    # Second check: Look in unified users table (case-insensitive for employee_id/roll_no)
     user = User.query.filter(
-        User.email.ilike(email),
-        User.employee_id == admission_id,
+        (User.employee_id.ilike(roll_number)),
         User.is_active == True
     ).first()
     
@@ -473,30 +519,13 @@ def auth_student():
                 "success": True,
                 "student": {
                     "name": user.full_name,
+                    "rollNo": user.employee_id,
                     "email": user.email,
-                    "admissionId": user.employee_id,
-                    "role": role.name
+                    "role": "STUDENT"
                 }
             })
     
-    # Second check: Look in legacy students table (for backward compatibility)
-    student = Student.query.filter_by(lookup_key=email).first()
-    if student:
-        # Extract student name from profile or use email
-        profile = student.profile or {}
-        student_name = profile.get('studentName', email.split('@')[0])
-        
-        return jsonify({
-            "success": True,
-            "student": {
-                "name": student_name,
-                "email": email,
-                "admissionId": admission_id,
-                "role": "STUDENT"
-            }
-        })
-    
-    return jsonify({"error": "Student not found"}), 404
+    return jsonify({"error": "Student not found with this roll number"}), 404
 
 
 @app.route('/api/auth/coordinator', methods=['POST'])
@@ -568,46 +597,114 @@ def auth_hod():
 
 # NEW UNIFIED USER AUTHENTICATION ENDPOINTS
 
+@app.route('/uploads/<path:filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+
+@app.route('/api/profile/upload-photo', methods=['POST'])
+def upload_profile_photo():
+    """Endpoint to upload a profile photo"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({"error": "Not authenticated"}), 401
+    
+    if 'photo' not in request.files:
+        return jsonify({"error": "No photo file provided"}), 400
+    
+    file = request.files['photo']
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+    
+    if file and allowed_file(file.filename):
+        filename = secure_filename(f"profile_{user_id}_{int(datetime.utcnow().timestamp())}_{file.filename}")
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(file_path)
+        
+        # Update user profile_photo in DB
+        relative_path = f"/uploads/{filename}"
+        user = User.query.get(user_id)
+        user.profile_photo = relative_path
+        db.session.commit()
+        
+        return jsonify({
+            "success": True,
+            "profilePhoto": relative_path
+        })
+    
+    return jsonify({"error": "File type not allowed"}), 400
+
+
 @app.route('/api/auth/login', methods=['POST'])
 def unified_login():
     """Unified login endpoint for all users (Creator, HOD, Coordinator)"""
-    payload = request.get_json(silent=True) or {}
-    email = payload.get('email', '').strip()
-    password = payload.get('password', '').strip()
-    
-    if not email or not password:
-        return jsonify({"error": "Email and password are required"}), 400
-    
-    # Find user by email - case insensitive search
-    users = User.query.filter(User.is_active == True).all()
-    user = None
-    for u in users:
-        if u.email.lower() == email.lower():
-            user = u
-            break
-    
-    if not user:
-        return jsonify({"error": "Invalid email or password"}), 401
-    
-    # Verify password
-    if not verify_password(password, user.password_hash):
-        return jsonify({"error": "Invalid email or password"}), 401
-    
-    # Update last login
-    user.last_login = datetime.utcnow()
-    db.session.commit()
-    
-    # Create session
-    session.permanent = True
-    session['user_id'] = user.id
-    session['role'] = Role.query.get(user.role_id).name if user.role_id else None
-    
-    return jsonify({
-        "success": True,
-        "user": user.to_dict(),
-        "requiresProfileCompletion": not user.profile_completed and session.get('role') != 'CREATOR',
-        "isTempPassword": user.is_temp_password
-    })
+    try:
+        payload = request.get_json(silent=True) or {}
+        email = payload.get('email', '').strip()
+        password = payload.get('password', '').strip()
+        
+        print(f"DEBUG: Login attempt for email='{email}'")
+        
+        if not email or not password:
+            return jsonify({"error": "Email and password are required"}), 400
+        
+        # Find user by email - case insensitive search
+        # Using ilike is better than fetching all users
+        user = User.query.filter(User.email.ilike(email), User.is_active == True).first()
+        
+        if not user:
+            print(f"DEBUG: User '{email}' not found")
+            return jsonify({"error": "Invalid email or password"}), 401
+        
+        # Verify password
+        if not verify_password(password, user.password_hash):
+            print(f"DEBUG: Password verification failed for user '{email}'")
+            return jsonify({"error": "Invalid email or password"}), 401
+        
+        print(f"DEBUG: Login successful for user '{email}' (Role ID: {user.role_id})")
+        
+        # Update last login
+        user.last_login = datetime.utcnow()
+        db.session.commit()
+        
+        # Create session
+        session.permanent = True
+        session['user_id'] = user.id
+        role = Role.query.get(user.role_id)
+        role_name = role.name if role else None
+        session['role'] = role_name
+        
+        # Set HOD specific session for backward compatibility
+        if role_name == 'HOD':
+            dept = Department.query.get(user.assigned_department_id)
+            session['hod_session'] = {
+                'hod_id': user.id,
+                'employee_id': user.employee_id,
+                'hod_name': user.full_name,
+                'dept_code': dept.code if dept else 'UNK',
+                'dept_name': dept.name if dept else 'Unknown Department',
+                'phone': user.phone,
+                'email': user.email,
+                'status': 'active',
+                'permissions': [{
+                    'dept_code': dept.code if dept else 'UNK',
+                    'can_view_students': True,
+                    'can_approve_requests': True,
+                    'can_view_reports': True,
+                    'can_manage_courses': True
+                }]
+            }
+        
+        return jsonify({
+            "success": True,
+            "user": user.to_dict(),
+            "requiresProfileCompletion": not user.profile_completed and role_name != 'CREATOR',
+            "registrationStatus": user.registration_status,
+            "isTempPassword": user.is_temp_password
+        })
+    except Exception as e:
+        print(f"ERROR in unified_login: {str(e)}")
+        return jsonify({"error": "An internal server error occurred"}), 500
 
 
 @app.route('/api/auth/logout', methods=['POST'])
@@ -661,6 +758,12 @@ def update_profile():
         user.address = payload['address'].strip()
     if 'profilePhoto' in payload:
         user.profile_photo = payload['profilePhoto'].strip()
+    if 'specialization' in payload:
+        user.specialization = payload['specialization'].strip()
+    if 'qualifications' in payload:
+        user.qualifications = payload['qualifications'].strip()
+    if 'bio' in payload:
+        user.bio = payload['bio'].strip()
     
     # Update password if provided
     if 'newPassword' in payload and payload['newPassword']:
@@ -736,7 +839,8 @@ def create_hod_user():
         employee_id=employee_id,
         assigned_department_id=department_id,
         profile_completed=False,
-        is_temp_password=True
+        is_temp_password=True,
+        registration_status='APPROVED' # Creator created users are auto-approved
     )
     
     try:
@@ -804,7 +908,8 @@ def create_faculty_coordinator():
         employee_id=employee_id,
         assigned_activity_name=activity_name,
         profile_completed=False,
-        is_temp_password=True
+        is_temp_password=True,
+        registration_status='APPROVED' # Creator created users are auto-approved
     )
     
     try:
@@ -832,6 +937,193 @@ def create_faculty_coordinator():
         return jsonify({"error": f"Failed to create coordinator: {str(e)}"}), 500
 
 
+# NEW UNIFIED MANAGEMENT ENDPOINTS for Creator
+
+@app.route('/api/creator/hods', methods=['GET'])
+@require_role('CREATOR')
+def list_hod_users():
+    """List all HOD users from the unified system"""
+    try:
+        # Join User, Department, and Role where Role is HOD
+        hods = db.session.query(User, Department).join(
+            Department, User.assigned_department_id == Department.id
+        ).join(
+            Role, User.role_id == Role.id
+        ).filter(
+            Role.name == 'HOD',
+            User.is_active == True
+        ).all()
+        
+        result = []
+        for user, dept in hods:
+            d = user.to_dict()
+            d['departmentName'] = dept.name
+            d['departmentCode'] = dept.code
+            result.append(d)
+        
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/creator/update-hod/<int:user_id>', methods=['PUT'])
+@require_role('CREATOR')
+def update_hod_user(user_id):
+    """Update HOD account details"""
+    payload = request.get_json(silent=True) or {}
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+        
+    full_name = payload.get('fullName')
+    email = payload.get('email')
+    employee_id = payload.get('employeeId')
+    department_id = payload.get('departmentId')
+    
+    if full_name: user.full_name = full_name
+    if email: user.email = email.strip().lower()
+    if employee_id: user.employee_id = employee_id
+    if department_id: user.assigned_department_id = department_id
+    
+    try:
+        db.session.commit()
+        
+        # Sync with legacy table if exists
+        legacy_hod = HOD.query.filter_by(email=user.email).first() or HOD.query.filter_by(employee_id=user.employee_id).first()
+        if legacy_hod:
+            if full_name: legacy_hod.name = full_name
+            if email: legacy_hod.email = email
+            if employee_id: legacy_hod.employee_id = employee_id
+            if department_id:
+                dept = Department.query.get(department_id)
+                if dept: legacy_hod.department = dept.name
+            db.session.commit()
+            
+        return jsonify({"success": True, "message": "HOD updated successfully", "user": user.to_dict()})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/creator/delete-hod/<int:user_id>', methods=['DELETE'])
+@require_role('CREATOR')
+def delete_hod_user(user_id):
+    """Delete (deactivate) HOD account"""
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+    
+    try:
+        # Also handle legacy table
+        legacy_hod = HOD.query.filter_by(email=user.email).first() or HOD.query.filter_by(employee_id=user.employee_id).first()
+        if legacy_hod:
+            db.session.delete(legacy_hod)
+            
+        # Deactivate instead of hard delete for history
+        user.is_active = False 
+        db.session.commit()
+        return jsonify({"success": True, "message": "HOD deactivated successfully"})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/activities/search', methods=['GET'])
+def search_activities():
+    """Search activities by name or pcode"""
+    name = request.args.get('name')
+    pcode = request.args.get('pcode')
+    
+    if pcode:
+        # Search in the JSON data field for programCode
+        activity = Activity.query.filter(Activity.data['programCode'].astext == str(pcode)).first()
+        if activity:
+            return jsonify(activity.to_dict())
+            
+    if not name:
+        return jsonify({"error": "Name or pcode parameter required"}), 400
+    
+    # Fuzzy search or exact Match
+    activity = Activity.query.filter(Activity.name.ilike(name)).first()
+    if not activity:
+        # Try searching by pshort in data
+        activity = Activity.query.filter(Activity.data['pshort'].astext.ilike(name)).first()
+        
+    if not activity:
+        return jsonify({"error": "Activity not found"}), 404
+        
+    return jsonify(activity.to_dict())
+
+
+@app.route('/api/creator/faculty', methods=['GET'])
+@require_role('CREATOR')
+def list_faculty_users():
+    """List all Faculty Coordinators"""
+    try:
+        coordinators = User.query.join(Role).filter(Role.name == 'FACULTY_COORDINATOR', User.is_active == True).all()
+        return jsonify([c.to_dict() for c in coordinators]), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/creator/update-faculty/<int:user_id>', methods=['PUT'])
+@require_role('CREATOR')
+def update_faculty_user(user_id):
+    """Update Faculty Coordinator details"""
+    payload = request.get_json(silent=True) or {}
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+    
+    full_name = payload.get('fullName')
+    email = payload.get('email')
+    employee_id = payload.get('employeeId')
+    activity_name = payload.get('activityName')
+    
+    if full_name: user.full_name = full_name
+    if email: user.email = email.strip().lower()
+    if employee_id: user.employee_id = employee_id
+    if activity_name: user.assigned_activity_name = activity_name
+    
+    try:
+        db.session.commit()
+        
+        # Sync legacy
+        legacy_coord = Coordinator.query.filter_by(email=user.email).first() or Coordinator.query.filter_by(coordinator_id=user.employee_id).first()
+        if legacy_coord:
+            if full_name: legacy_coord.name = full_name
+            if email: legacy_coord.email = email
+            if employee_id: legacy_coord.coordinator_id = employee_id
+            if activity_name: legacy_coord.role = activity_name
+            db.session.commit()
+            
+        return jsonify({"success": True, "message": "Coordinator updated successfully", "user": user.to_dict()})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/creator/delete-faculty/<int:user_id>', methods=['DELETE'])
+@require_role('CREATOR')
+def delete_faculty_user(user_id):
+    """Delete Faculty Coordinator"""
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+        
+    try:
+        legacy_coord = Coordinator.query.filter_by(email=user.email).first() or Coordinator.query.filter_by(coordinator_id=user.employee_id).first()
+        if legacy_coord:
+            db.session.delete(legacy_coord)
+            
+        user.is_active = False
+        db.session.commit()
+        return jsonify({"success": True, "message": "Coordinator deactivated successfully"})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
 # HELPER ENDPOINTS
 
 @app.route('/api/roles', methods=['GET'])
@@ -848,6 +1140,88 @@ def get_departments():
     return jsonify([dept.to_dict() for dept in departments])
 
 
+@app.route('/api/departments/by-code/<string:code>', methods=['GET'])
+def get_department_by_code(code):
+    """Get department by code"""
+    dept = Department.query.filter(Department.code.ilike(code)).first()
+    if not dept:
+        return jsonify({"error": "Department not found"}), 404
+    return jsonify(dept.to_dict())
+
+
+@app.route('/api/departments/<int:dept_id>/hod', methods=['GET'])
+def get_department_hod(dept_id):
+    """Get HOD information for a specific department"""
+    try:
+        dept = Department.query.get(dept_id)
+        if not dept:
+            return jsonify({"error": "Department not found"}), 404
+        
+        # Find HOD assigned to this department
+        hod_user = User.query.filter_by(assigned_department_id=dept_id).first()
+        
+        if not hod_user:
+            # If no specific HOD found, return default HOD message
+            return jsonify({
+                "id": None,
+                "full_name": f"HOD - {dept.name}",
+                "phone": "Not Assigned",
+                "email": "Not Assigned",
+                "department_id": dept_id,
+                "department_name": dept.name
+            })
+        
+        return jsonify({
+            "id": hod_user.id,
+            "full_name": hod_user.full_name,
+            "phone": hod_user.phone or "Not Available",
+            "email": hod_user.email,
+            "employee_id": hod_user.employee_id,
+            "department_id": dept_id,
+            "department_name": dept.name,
+            "is_active": hod_user.is_active
+        })
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/api/activities/coordinator/<string:activity_name>', methods=['GET'])
+def get_activity_coordinator_by_name(activity_name):
+    """Get coordinator for a specific activity by name"""
+    try:
+        # Search for coordinator in User table
+        coordinator = User.query.filter(
+            (User.assigned_activity_name.ilike(activity_name)) & 
+            (User.is_active == True)
+        ).first()
+        
+        if not coordinator:
+            # Fallback: check Role and Name (some might be named like "NCC Coordinator")
+            coordinator = User.query.filter(
+                (User.full_name.ilike(f"%{activity_name}%")) & 
+                (User.is_active == True)
+            ).first()
+
+        if not coordinator:
+            return jsonify({
+                "full_name": "Not Assigned",
+                "phone": "N/A",
+                "email": "N/A"
+            }), 200
+
+        return jsonify({
+            "id": coordinator.id,
+            "full_name": coordinator.full_name,
+            "phone": coordinator.phone or "Not Available",
+            "email": coordinator.email,
+            "employee_id": coordinator.employee_id,
+            "assigned_activity": coordinator.assigned_activity_name
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route('/api/departments/<int:dept_id>/classes', methods=['GET'])
 def get_department_classes(dept_id):
     """Get all classes for a specific department"""
@@ -857,14 +1231,14 @@ def get_department_classes(dept_id):
             return jsonify({"error": "Department not found"}), 404
         
         # Create mapping of department codes to activity department names
-        # Removed CSE and ECE - now using AIDT (AI and Data Science) only
+        # Updated mapping to use DSAI (AI and Data Science)
         dept_code_map = {
             'BA': 'B.A.',
             'BCom': 'B.Com.',
             'BBA': 'B.B.A.',
             'BCA': 'B.C.A.',
             'BSc': 'B.Sc.',
-            'AIDT': 'AI and Data Science'
+            'DSAI': 'AI and Data Science'
         }
         
         # Get the activity department name for this code
@@ -903,14 +1277,14 @@ def get_all_departments_with_classes():
     """Get all departments with their classes in a single response"""
     try:
         # Create mapping of department codes to activity department names
-        # Removed CSE and ECE - now using AIDT (AI and Data Science) only
+        # Updated mapping to use DSAI (AI and Data Science)
         dept_code_map = {
             'BA': 'B.A.',
             'BCom': 'B.Com.',
             'BBA': 'B.B.A.',
             'BCA': 'B.C.A.',
             'BSc': 'B.Sc.',
-            'AIDT': 'AI and Data Science'
+            'DSAI': 'AI and Data Science'
         }
         
         departments = Department.query.all()
@@ -2053,11 +2427,291 @@ def students_by_activity():
     return jsonify(students_data)
 
 
+# ==================== HOD ROUTES ====================
+
+@app.route('/api/hod/departments', methods=['GET'])
+def get_hod_departments():
+    """Get all departments with HOD information from Database"""
+    try:
+        # Join Users with Departments where Role is HOD
+        hods = db.session.query(User, Department).join(
+            Department, User.assigned_department_id == Department.id
+        ).join(
+            Role, User.role_id == Role.id
+        ).filter(
+            Role.name == 'HOD',
+            User.is_active == True
+        ).all()
+        
+        departments = []
+        for user, dept in hods:
+            departments.append({
+                'hod_id': user.id,
+                'employee_id': user.employee_id,
+                'hod_name': user.full_name,
+                'dept_code': dept.code,
+                'dept_name': dept.name,
+                'phone': user.phone,
+                'email': user.email
+            })
+        
+        return jsonify({
+            'status': 'success',
+            'departments': departments
+        }), 200
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+
+@app.route('/api/hod/login', methods=['POST'])
+def hod_login():
+    """HOD Login with department selection using Database"""
+    try:
+        data = request.get_json()
+        # Frontend sends hod_id (which might be user.id or employee_id)
+        hod_id_input = data.get('hod_id')
+        dept_code = data.get('dept_code')
+        password = data.get('password')
+        
+        if not all([hod_id_input, dept_code, password]):
+            return jsonify({'status': 'error', 'message': 'Missing required fields'}), 400
+        
+        # Find user by ID or Employee ID
+        user = User.query.filter(
+            (User.id == int(hod_id_input) if str(hod_id_input).isdigit() else False) | 
+            (User.employee_id == str(hod_id_input))
+        ).first()
+        
+        if not user:
+            return jsonify({'status': 'error', 'message': 'Invalid credentials'}), 401
+        
+        # Verify Role
+        if not user.role or user.role.name != 'HOD':
+             return jsonify({'status': 'error', 'message': 'User is not an HOD'}), 403
+
+        # Verify Password
+        if not verify_password(password, user.password_hash):
+             return jsonify({'status': 'error', 'message': 'Invalid credentials'}), 401
+
+        # Verify Department
+        dept = Department.query.get(user.assigned_department_id)
+        if not dept or dept.code != dept_code:
+             return jsonify({'status': 'error', 'message': 'HOD does not belong to this department'}), 403
+
+        # Create session
+        session.permanent = True
+        session['user_id'] = user.id
+        session['role'] = 'HOD'
+        session['hod_session'] = {
+            'hod_id': user.id,
+            'employee_id': user.employee_id,
+            'hod_name': user.full_name,
+            'dept_code': dept.code,
+            'dept_name': dept.name,
+            'phone': user.phone,
+            'email': user.email,
+            'status': 'active',
+            'permissions': [{
+                'dept_code': dept.code,
+                'can_view_students': True,
+                'can_approve_requests': True,
+                'can_view_reports': True,
+                'can_manage_courses': True
+            }]
+        }
+        
+        return jsonify({
+            'status': 'success',
+            'message': 'HOD login successful',
+            'hod_info': session['hod_session'],
+            'requiresProfileCompletion': not user.profile_completed
+        }), 200
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+
+@app.route('/api/hod/panel', methods=['GET'])
+def hod_panel():
+    """Get HOD panel data - requires session"""
+    if 'hod_session' not in session:
+        return jsonify({'status': 'error', 'message': 'Unauthorized'}), 401
+    
+    hod_info = session['hod_session']
+    
+    return jsonify({
+        'status': 'success',
+        'panel_data': {
+            'hod_id': hod_info['hod_id'],
+            'hod_name': hod_info['hod_name'],
+            'dept_code': hod_info['dept_code'],
+            'dept_name': hod_info['dept_name'],
+            'phone': hod_info['phone'],
+            'permissions': hod_info['permissions']
+        }
+    }), 200
+
+
+@app.route('/api/hod/students', methods=['GET'])
+def hod_get_students():
+    """Get students for HOD's department"""
+    if 'hod_session' not in session:
+        return jsonify({'status': 'error', 'message': 'Unauthorized'}), 401
+    
+    try:
+        hod_info = session['hod_session']
+        dept_code = hod_info['dept_code']
+        
+        # Query students from database filtered by department
+        # For now, return from student_info table
+        students_list = db.session.execute(
+            db.text('''
+                SELECT DISTINCT 
+                    si.roll_number,
+                    si.student_name,
+                    si.email,
+                    si.phone,
+                    si.pcode,
+                    si.dept,
+                    si.class,
+                    sr.status as registration_status,
+                    si.jyear,
+                    si.secl
+                FROM student_info si
+                LEFT JOIN student_registrations sr ON si.roll_number = sr.roll_number
+                WHERE si.dept = :dept_code OR si.pcode IN (
+                    SELECT DISTINCT pcode FROM program_info WHERE dept = :dept_code
+                )
+                ORDER BY si.class, si.roll_number
+            '''),
+            {'dept_code': dept_code}
+        ).fetchall()
+        
+        students = []
+        for student in students_list:
+            students.append({
+                'roll_number': student[0],
+                'student_name': student[1],
+                'email': student[2],
+                'phone': student[3],
+                'pcode': student[4],
+                'dept_code': student[5],
+                'class_name': student[6],
+                'registration_status': student[7] or 'not_registered',
+                'year': student[8],
+                'section': student[9]
+            })
+        
+        return jsonify({
+            'status': 'success',
+            'department': dept_code,
+            'dept_name': hod_info['dept_name'],
+            'total': len(students),
+            'students': students
+        }), 200
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+
+@app.route('/api/hod/logout', methods=['POST'])
+def hod_logout():
+    """HOD Logout"""
+    if 'hod_session' in session:
+        del session['hod_session']
+    
+    return jsonify({
+        'status': 'success',
+        'message': 'HOD logout successful'
+    }), 200
+
+
+# ==================== REGISTRATION & APPROVAL ROUTES ====================
+
+@app.route('/api/registration/submit', methods=['POST'])
+def submit_registration():
+    """Student submits registration with department selection"""
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({'status': 'error', 'message': 'Unauthorized'}), 401
+    
+    data = request.get_json()
+    department_id = data.get('departmentId')
+    
+    if not department_id:
+        return jsonify({'status': 'error', 'message': 'Department is required'}), 400
+        
+    try:
+        user = User.query.get(user_id)
+        user.assigned_department_id = department_id
+        user.registration_status = 'PENDING'
+        db.session.commit()
+        
+        return jsonify({'status': 'success', 'message': 'Registration submitted. Waiting for HOD approval.'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+@app.route('/api/hod/pending-students', methods=['GET'])
+def get_pending_students():
+    """HOD gets pending students for their department"""
+    if 'hod_session' not in session:
+        return jsonify({'status': 'error', 'message': 'Unauthorized'}), 401
+        
+    hod_info = session['hod_session']
+    # Find department ID based on code
+    dept = Department.query.filter_by(code=hod_info['dept_code']).first()
+    
+    if not dept:
+        return jsonify({'status': 'error', 'message': 'Department not found'}), 404
+        
+    try:
+        # Get students with PENDING status in this department
+        students = User.query.filter_by(
+            assigned_department_id=dept.id,
+            registration_status='PENDING'
+        ).join(Role).filter(Role.name == 'STUDENT').all()
+        
+        return jsonify({
+            'status': 'success',
+            'students': [s.to_dict() for s in students]
+        }), 200
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+@app.route('/api/hod/approve-student', methods=['POST'])
+def approve_student():
+    """HOD approves a student registration"""
+    if 'hod_session' not in session:
+        return jsonify({'status': 'error', 'message': 'Unauthorized'}), 401
+        
+    data = request.get_json()
+    student_id = data.get('studentId')
+    action = data.get('action', 'APPROVE') # APPROVE or REJECT
+    
+    if not student_id:
+        return jsonify({'status': 'error', 'message': 'Student ID required'}), 400
+        
+    try:
+        student = User.query.get(student_id)
+        if not student:
+            return jsonify({'status': 'error', 'message': 'Student not found'}), 404
+            
+        if action == 'APPROVE':
+            student.registration_status = 'APPROVED'
+        elif action == 'REJECT':
+            student.registration_status = 'REJECTED'
+            
+        db.session.commit()
+        return jsonify({'status': 'success', 'message': f'Student {action}D successfully'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+
 if __name__ == '__main__':
     with app.app_context():
         try:
             db.create_all() # Creates tables if they don't exist
-            print("✅ Successfully connected to the database and created tables.")
+            print("[OK] Successfully connected to the database and created tables.")
             
             # Ensure all roles exist
             roles_to_create = [
@@ -2081,28 +2735,40 @@ if __name__ == '__main__':
                     'password': 'admin123',
                     'name': 'System Administrator',
                     'role': 'CREATOR',
-                    'employee_id': 'ADMIN001'
+                    'employee_id': 'ADMIN001',
+                    'status': 'APPROVED'
+                },
+                {
+                    'email': 'create',
+                    'password': '1234',
+                    'name': 'Super Admin',
+                    'role': 'CREATOR',
+                    'employee_id': 'CREATOR001',
+                    'status': 'APPROVED'
                 },
                 {
                     'email': 'student@pbsiddhartha.ac.in',
                     'password': 'student123',
                     'name': 'Test Student',
                     'role': 'STUDENT',
-                    'employee_id': '22B91A05L6'
+                    'employee_id': '22B91A05L6',
+                    'status': 'APPROVED'
                 },
                 {
                     'email': 'hod@pbsiddhartha.ac.in',
                     'password': 'hod123',
                     'name': 'Dr. K Uday Sri',
                     'role': 'HOD',
-                    'employee_id': '12345'
+                    'employee_id': '12345',
+                    'status': 'APPROVED'
                 },
                 {
                     'email': 'ruhi@pbsiddhartha.ac.in',
                     'password': 'ruhi123',
                     'name': 'Ruhi - NCC Coordinator',
                     'role': 'COORDINATOR',
-                    'employee_id': '123'
+                    'employee_id': '123',
+                    'status': 'APPROVED'
                 }
             ]
             
@@ -2124,24 +2790,30 @@ if __name__ == '__main__':
                         assigned_activity_name='NCC' if user_data['role'] == 'COORDINATOR' else None,
                         is_temp_password=False,
                         profile_completed=True,
-                        is_active=True
+                        is_active=True,
+                        registration_status=user_data.get('status', 'APPROVED')
                     )
                     db.session.add(user)
             db.session.commit()
             
             # Print all available credentials
-            print("\n✅ All default users are ready!")
-            print("\n📋 Available Login Credentials:")
+            print("\n[OK] All default users are ready!")
+            print("\n[INFO] Available Login Credentials:")
             print("=" * 80)
-            print("Creator/Admin:   admin@pbsiddhartha.ac.in / admin123")
+            print("Creator (Super): create / 1234")
+            print("Creator (Admin): admin@pbsiddhartha.ac.in / admin123")
             print("Student:         student@pbsiddhartha.ac.in / student123")
             print("HOD:             hod@pbsiddhartha.ac.in / hod123")
             print("Coordinator:     ruhi@pbsiddhartha.ac.in / ruhi123")
             print("=" * 80)
             
         except Exception as e:
-            print(f"❌ Database Error: {e}")
-            print("💡 Hint: Run 'python backend/create_db.py' to create the database first.")
+            print(f"[ERROR] Database Error: {e}")
+            print("[HINT] Ensure the database is properly configured.")
             exit(1)
     port = int(os.environ.get('PORT', '5000'))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    print(f"\n[INFO] Starting server on port {port}...")
+    # use_reloader=False is set to prevent [WinError 10038] on Windows
+    app.run(host='0.0.0.0', port=port, debug=True, use_reloader=False)
+
+# Replaced duplicate if __name__ == '__main__': block with single clean execution block

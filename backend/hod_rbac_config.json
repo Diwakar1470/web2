@@ -1,0 +1,192 @@
+{
+  "rbac_roles": {
+    "hod": {
+      "role_id": "hod",
+      "role_name": "Head of Department",
+      "description": "HOD can manage their department and students",
+      "permissions": [
+        "view_department_dashboard",
+        "view_department_students",
+        "view_student_details",
+        "approve_student_requests",
+        "view_department_approvals_queue",
+        "manage_department_courses",
+        "view_department_analytics",
+        "view_department_reports",
+        "access_hod_panel"
+      ],
+      "access_level": 2
+    }
+  },
+  "department_access": {
+    "ECO": {
+      "dept_code": "ECO",
+      "dept_name": "Economics",
+      "hod_id": "3000",
+      "hod_name": "Dr.M.Ramesh",
+      "allowed_actions": [
+        "view_students",
+        "view_approvals",
+        "manage_requests",
+        "generate_reports"
+      ],
+      "student_filter": "pcode IN (11)"
+    },
+    "ENG": {
+      "dept_code": "ENG",
+      "dept_name": "English",
+      "hod_id": "2001",
+      "hod_name": "Sri K.Perachary",
+      "allowed_actions": [
+        "view_students",
+        "view_approvals",
+        "manage_requests",
+        "generate_reports"
+      ],
+      "student_filter": "dept IN ('ENG')"
+    },
+    "TEL": {
+      "dept_code": "TEL",
+      "dept_name": "Telugu",
+      "hod_id": "2004",
+      "hod_name": "Dr.Y.Purna Chandra Rao",
+      "allowed_actions": [
+        "view_students",
+        "view_approvals",
+        "manage_requests",
+        "generate_reports"
+      ],
+      "student_filter": "dept IN ('TEL')"
+    },
+    "COM": {
+      "dept_code": "COM",
+      "dept_name": "Commerce",
+      "hod_id": "2035",
+      "hod_name": "Sri K.Narayana Rao",
+      "allowed_actions": [
+        "view_students",
+        "view_approvals",
+        "manage_requests",
+        "generate_reports"
+      ],
+      "student_filter": "pcode IN (21, 22, 23, 24, 25, 26, 27, 28)"
+    },
+    "CSC": {
+      "dept_code": "CSC",
+      "dept_name": "Computer Science",
+      "hod_id": "5018",
+      "hod_name": "Dr.T.S.Ravi kiran",
+      "allowed_actions": [
+        "view_students",
+        "view_approvals",
+        "manage_requests",
+        "generate_reports"
+      ],
+      "student_filter": "pcode IN (41, 42, 71, 72, 73, 76)"
+    },
+    "MAT": {
+      "dept_code": "MAT",
+      "dept_name": "Mathematics",
+      "hod_id": "3004",
+      "hod_name": "Smt.S.Siva Naga Lakshmi",
+      "allowed_actions": [
+        "view_students",
+        "view_approvals",
+        "manage_requests",
+        "generate_reports"
+      ],
+      "student_filter": "pcode IN (61)"
+    },
+    "CHE": {
+      "dept_code": "CHE",
+      "dept_name": "Chemistry",
+      "hod_id": "3126",
+      "hod_name": "Dr.A.Rama Rao",
+      "allowed_actions": [
+        "view_students",
+        "view_approvals",
+        "manage_requests",
+        "generate_reports"
+      ],
+      "student_filter": "pcode IN (62)"
+    },
+    "PHY": {
+      "dept_code": "PHY",
+      "dept_name": "Physics",
+      "hod_id": "3011",
+      "hod_name": "Dr.T.S.Krishna",
+      "allowed_actions": [
+        "view_students",
+        "view_approvals",
+        "manage_requests",
+        "generate_reports"
+      ],
+      "student_filter": "pcode IN (63)"
+    },
+    "STA": {
+      "dept_code": "STA",
+      "dept_name": "Statistics",
+      "hod_id": "2011",
+      "hod_name": "Sri G.Chakravarthi",
+      "allowed_actions": [
+        "view_students",
+        "view_approvals",
+        "manage_requests",
+        "generate_reports"
+      ],
+      "student_filter": "pcode IN (65)"
+    },
+    "ELE": {
+      "dept_code": "ELE",
+      "dept_name": "Electronics",
+      "hod_id": "2014",
+      "hod_name": "Sri K.S.V.Samba Siva Rao",
+      "allowed_actions": [
+        "view_students",
+        "view_approvals",
+        "manage_requests",
+        "generate_reports"
+      ],
+      "student_filter": "pcode IN (64)"
+    },
+    "BOT": {
+      "dept_code": "BOT",
+      "dept_name": "Botany",
+      "hod_id": "3068",
+      "hod_name": "Dr.P.Srinivasa Rao",
+      "allowed_actions": [
+        "view_students",
+        "view_approvals",
+        "manage_requests",
+        "generate_reports"
+      ],
+      "student_filter": "pcode IN (51)"
+    },
+    "ZOO": {
+      "dept_code": "ZOO",
+      "dept_name": "Zoology",
+      "hod_id": "2002",
+      "hod_name": "Sri V.Babu Rao",
+      "allowed_actions": [
+        "view_students",
+        "view_approvals",
+        "manage_requests",
+        "generate_reports"
+      ],
+      "student_filter": "pcode IN (52)"
+    },
+    "DSAI": {
+      "dept_code": "DSAI",
+      "dept_name": "Data Science & AI",
+      "hod_id": "3069",
+      "hod_name": "Dr.K.Udaya Sri",
+      "allowed_actions": [
+        "view_students",
+        "view_approvals",
+        "manage_requests",
+        "generate_reports"
+      ],
+      "student_filter": "pcode IN (74, 75, 77)"
+    }
+  }
+}

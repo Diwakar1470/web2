@@ -1,6 +1,8 @@
 @echo off
-echo Starting Flask Backend...
+set FLASK_ENV=development
+set FLASK_DEBUG=0
+echo Starting Flask Backend (Safe Mode - No Socket Error)...
 echo.
-cd backend
-"..\\.venv\\Scripts\\python.exe" app.py
+cd ..
+".venv\Scripts\python.exe" backend\app.py
 pause
