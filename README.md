@@ -17,7 +17,7 @@ A comprehensive web-based course registration system for schools with role-based
 │   └── [other pages]
 ├── file/                       # Sample data (CSVs)
 ├── keep/                       # Important guides and setup files
-│   ├── README_POSTGRESQL.md   # Database setup guide
+│   ├── README_MYSQL.md   # Database setup guide
 │   ├── QUICK_COMMANDS.md      # Useful commands
 │   ├── VERIFICATION_GUIDE.md  # System verification
 │   └── [other documentation]
@@ -36,7 +36,7 @@ pip install -r requirements.txt
 ```
 
 ### 2. Database Setup
-Ensure PostgreSQL is installed and running, then follow the guide in `keep/README_POSTGRESQL.md`
+Ensure MySQL is installed and running, then follow the guide in `backend/docs/README.md`
 
 ### 3. Start Backend Server
 ```powershell
@@ -50,7 +50,7 @@ Open `web/index.html` in your browser
 
 ## 📚 Documentation
 
-- **[README_POSTGRESQL.md](keep/README_POSTGRESQL.md)** - Database setup and configuration
+- **[README.md](backend/docs/README.md)** - Database setup and configuration
 - **[QUICK_COMMANDS.md](keep/QUICK_COMMANDS.md)** - Frequently used commands
 - **[VERIFICATION_GUIDE.md](keep/VERIFICATION_GUIDE.md)** - System verification steps
 - **[DEPARTMENT_SETUP_GUIDE.md](keep/DEPARTMENT_SETUP_GUIDE.md)** - Department and class configuration
@@ -65,9 +65,9 @@ Open `web/index.html` in your browser
 
 ## 🔧 Technology Stack
 
-- **Backend**: Python Flask with PostgreSQL
+- **Backend**: Python Flask with MySQL
 - **Frontend**: HTML5, CSS3, JavaScript
-- **Database**: PostgreSQL 12+
+- **Database**: MySQL 8.0+
 - **Python**: 3.8+
 
 ## 📝 Getting Help
@@ -81,4 +81,4 @@ January 2026
 
 ---
 
-For detailed setup instructions, see [keep/README_POSTGRESQL.md](keep/README_POSTGRESQL.md)
+For detailed setup instructions, see [backend/docs/README.md](backend/docs/README.md)

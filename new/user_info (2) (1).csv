@@ -1,0 +1,158 @@
+userid,uname,fname,ugpg,gender,mobile,email,desig,dname,dept
+2,2001,Sri K.Perachary ,UG,,9963043362,,Assistant Professor,,ENG
+3,2002,Sri V.Babu Rao,,,9948221110,,Director & HoD Zoology ,,Admin
+4,2003,Smt.Ch.Anantha Sai Lakshmi,UG,,9948616807,,Assistant Professor,,ENG
+5,2004,Dr.Y.Purna Chandra Rao,UG,,9294005664,,Assistant Professor,,TEL
+6,2007,Smt.M.Venkata Ramana,UG,,9908538081,,Assistant Professor,,MAT
+7,2008,Sri A.Venkatesh,UG,,9848683512,,Assistant Professor,,MAT
+8,2010,Smt.K.Anupama,UG,,9177756173,,Assistant Professor,,MAT
+9,2011,Sri G.Chakravarthi,UG,,9985544990,,"Assistant Professor, HoD",,STA
+10,2012,Sri E.Murali Krishna,UG,,9985401979,,Assistant Professor,,STA
+11,2013,Sri A.Balaji,UG,,9573405897,,Assistant Professor,,STA
+12,2014,Sri K.S.V.Samba Siva Rao,UG,,9441469690,,"Assistant Professor, HoD",,ELE
+13,2020,Sri K.Sridhar,UG,,9849965036,,Assistant Professor,,CSC
+14,2022,Sri R.Gopi,UG,,9989705675,,Assistant Professor,,CSC
+15,2023,Sri S.Rajesh,UG,,9502474508,,Assistant Professor,,CSC
+16,2027,Smt.Y.J.N.Lakshmi,UG,,9052341968,,Assistant Professor,,CSC
+17,2028,Sri K.Sudhir,UG,,9603298396,,"Assistanrt Professor, Dy HoD ",,CSC
+18,2031,Smt.V.Jhansi Laskhmi,UG,,9246418242,,Assistant Professor,,CSC
+19,2032,Sri K.V.Ramesh Chandra,UG,,9440056690,,"Assistant Professor,  Dy HoD",,BBA
+20,2034,Sri K.Vijay,UG,,9700069345,,Assistant Professor,,BBA
+21,2035,Sri K.Narayana Rao ,UG,,9885038196,,"Assistant Professor, HoD",,COM
+22,2036,Sri P.Subhakar ,UG,,9866007756,,Assistant Professor,,COM
+23,2038,Sri VVK.Dharmendra,UG,,9052377750,,Assistant Professor,,COM
+24,2040,Smt.E.Suvarnanjali,UG,,9493248821,,Assistant Professor,,COM
+25,2041,Smt.M.Siva Ranjani,UG,,9000870738,,Assistant Professor,,COM
+26,2044,Dr.A.N.V.Durga Anupama,UG,,9949017195,,Assistant Professor,,COM
+27,2048,Smt.D.Sravani,UG,,8919541284,,Assistant Professor,,BOT
+28,2049,Smt.K.Vanisree,UG,,9849031571,,Assistant Professor,,LIB
+29,2058,Sri Ch.Syambabu,UG,,7674004385,,Assistant Professor,,MAT
+30,2060,Sri E.Nagarjuna Babu,UG,,7207227637,,Assistant Professor,,CHE
+31,2070,Dr.Ch.V.Rohini Kusuma,UG,,9848231214,,Assistant Professor,,ECO
+32,3000,Dr.M.Ramesh,,,9989616969,,Principal & HoD Economics,,Admin
+33,3004,Smt.S.Siva Naga Lakshmi,UG,,9703315452,,Assistant Professor,,MAT
+34,3011,Dr.T.S.Krishna,UG,,9700003993,,"Assistant Professor, HoD",,PHY
+35,3013,Sri D.Srinivasa Reddy,UG,,9866299856,,Assistant Professor,,ELE
+36,3014,Ms.G.Naga Sasanka,UG,,8074498432,,Assistant Professor,,ELE
+37,3015,Sri E.V.V.S. Siva Kumar,UG,,9182064238,,Assistant Professor,,CSC
+38,3021,Sri K.Veerendranadh,UG,,9989462656,,Assistant Professor,,CSC
+39,3023,Dr.P.Guru Prasad,PG,,8686208686,,Assistant Professor,,MBABA
+40,3025,Smt.O.Padmaja,UG,,9010709173,,Assistant Professor,,COM
+41,3027,Dr.Ch. Rajeswari,UG,,9490020100,,Assistant Professor,,ENG
+42,3029,Sri B.Phani Krishna,UG,,8143375795,,Assistant Professor,,COM
+43,3032,Dr.A.Samba Naik,UG,,9346857782,,Assistant Professor,,ZOO
+44,3034,Sri K.Siva Naga Raju,UG,,8074234777,,Assistant Professor,,STA
+45,3036,Sri N.Rakesh,UG,,9059548851,,Assistant Professor,,STA
+46,3037,Sri D.Vasu,UG,,8885869995,,"Assistant Professor,  Dy HoD",,BBABA
+47,3041,Sri K.Ravi Shankar,UG,,9390687525,,Assistant Professor,,CSC
+48,3043,Smt.Magam Vijitha,UG,,9912325426,,Assistant Professor,,CSC
+49,3047,Sri T. Srinivasa Rao,UG,,9533866466,,Assistant Professor,,COM
+50,3048,Dr.V.Srinivas,UG,,8374884565,,Assistant Professor,,COM
+51,3052,Sri Y.Sai Subrahmanyam,UG,,8099045669,,Assistant Professor,,MAT
+52,3054,Dr.Maganti.V.V.N.L. Sudha Rani,UG,,9247834748,,Assistant Professor,,MAT
+53,3055,Dr.B.Sankar Babu,UG,,9346487036,,Assistant Professor,,COM
+54,3059,Ms.Kodali Divya,UG,,8978246421,,Assistant Professor,,STA
+55,3061,Dr.Sk.Khaja Muswareen,UG,,9494698368,,Assistant Professor,,PHY
+56,3062,Smt.Sk.John Bee,UG,,8686711904,,Assistant Professor,,CSC
+57,3064,Smt.N.Sharmila,UG,,9533271625,,Assistant Professor,,PED
+58,3065,Smt.M.Siva Parvathi,UG,,8143569429,,Lecturer,,STA
+59,3068,Dr.P.Srinivasa Rao,UG,,9440609508,,"Assistant Professor, HoD",,BOT
+60,3069,Dr.K.Udaya Sri,PG,,9490965267,,"Assistant Professor, HoD ",,DSAI
+61,3071,Ms.V.Sree Rekha,UG,,9959089041,,Lecturer,,CSC
+62,3073,Smt.B.Roja Priscilla ,PG,,9949543216,,Lecturer,,CSC
+63,3076,Sri J.Panduranga Rao,UG,,9441176794,,Lecturer,,PHY
+64,3077,Smt.J.Nirmala,UG,,9912572525,,Lecturer,,MAT
+65,3078,Smt.Ch.Hanuman Jyothi,UG,,9848104569,,Assistant Professor,,BBABA
+66,3079,Smt.G.Bhargavi,UG,,9985841457,,Lecturer,,STA
+67,3080,Dr.M.V.Srinivasa Rao,UG,,9949893984,,Assistant Professor,,COM
+68,3082,Sri Y.Ravi Babu,UG,,9000645846,,Lecturer,,MAT
+69,3083,Sri S.Gopala Rao,UG,,9133002095,,Lecturer,,ENG
+70,3087,Smt.K.Swarupa Rani,UG,,9963288799,,Lecturer,,ENG
+71,3092,Smt.Ch.Venkata Deepika,UG,,8977516656,,Lecturer,,CSC
+72,3094,Dr.K.Srinivasulu,UG,,9441210174,,Assistant Professor,,BBA
+73,3095,Sri P.Kishore,UG,,9492884775,,Assistant Professor,,BBA
+74,3096,Sri Bonthula Sai Ram,UG,,9985673636,,Assistant Professor,,BBABA
+75,3098,Dr.M.Venkateswara Rao,UG,,8985664969,,Assistant Professor,,COM
+76,3099,Sri A. Anil Kumar,UG,,8008250246/ 9030981510,,Lecturer,,ENG
+77,3100,Dr.M.Hanumaiah,UG,,9441077625,,Assistant Professor,,COM
+78,3103,Ms.K.Bhuvaneswari,PG,,8247493147,,Lecturer,,CSC
+79,3104,Ms.D.Sri Naga Prasanna,PG,,8790154520,,Lecturer,,CSC
+80,3105,Ms.Ch.Sowmya,PG,,7893317686,,Lecturer,,DSAI
+81,3107,Ms.K.Vani,UG,,6305187790,,Lecturer,,CSC
+82,3109,Smt.Ch.Sirisha,UG,,9553896951,,Assistant Professor,,ZOO
+83,3112,Ms.B.Harshitha Reddy,UG,,8500996365,,Lecturer,,CSC
+84,3113,Ms.P.Devika,UG,,9030689396,,Lecturer,,CSC
+85,3114,Ms.S.Meghana Naga Durga,UG,,7672061186,,Lecturer,,CSC
+86,3115,Ms.M.Indrani,UG,,7337295853,,Lecturer,,CSC
+87,3116,Smt.G.Vasudha,UG,,9492711770,,Assistant Professor,,COM
+88,3117,Ms.P.Sai Lakshmi Aparna Devi,UG,,9885950367,,Assistant Professor,,COM
+89,3119,Smt K.Neelima,UG,,9030250315,,Lecturer,,STA
+90,3120,Dr.G.V.S.R.S.A.Sastry,UG,,9440262471,,Assistant Professor,,COM
+91,3121,Smt.V.Samhita Reddy,UG,,7290079995,,Lecturer,,DSAI
+92,3123,Sri B.Prasanth,PG,,9553878437,,Lecturer,,CSC
+93,4068,Smt.P.Lalitha Priyanka,UG,,8686797932,,Assistant Professor,,BTE
+94,3125,Smt.Naziya Sulthana,PG,,8019564784,,Assistant Professor,,MBABA
+95,3126,Dr.A.Rama Rao,UG,,9701651461,,Assistant Professor,,CHE
+96,3127,Ms.T.Poojitha,UG,,7799467493,,Lecturer,,PHY
+97,3128,Dr.D.Srilaxmi,UG,,9989633788,,Assistant Professor,,CHE
+98,3129,Smt.Ch.Kavya,UG,,7995247084,,Lecturer,,CSC
+99,3130,Dr.T.V.Bala Krishna Reddy,UG,,9963992102,,"Assistant Professor, HoD",,PED
+100,3131,Sri K.Emmaniele,UG,,8840612323,,Lecturer,,ENG
+101,3132,Smt.B.Shalini,UG,,9032265969,,Assistant Professor,,BBA
+102,3133,Dr.K.S.Arun Kumar,PG,,"9849090597/
+9609140273",,Assistant Professor,,MBA
+103,3134,Dr.N.Satya Srinivasu,UG,,"9494430304/
+9989844001",,Assistant Professor,,TEL
+104,3150,Ms.I.Swetha,UG,,8125409914,,Lecturer,,DSAI
+105,3152,Smt.Kanaka Durga.S,UG,,9703133456,,Assistant Professor,,COM
+106,3153,Dr.Y.Srinivasa Rao,UG,,9705640878,,Assistant Professor,,CSC
+107,3154,Sri.S.Siva Naga Sai Mohan,PG,,8985353103,,Assistant Professor,,MBABA
+108,3155,Ms.Ch.Yoga Sri Rajya Lakshmi,UG,,9542742598,,Lecturer,,DSAI
+109,3156,Dr.K.Ratna Kumari,UG,,6301372173,,"Lecturer,hod",,BTE
+110,3157,Smt.V.Bhanu Nareesha,UG,,9160881945,,Lecturer,,ENG
+111,3158,Dr.G.Nagaraju,UG,,9491342882,,Lecturer,,ELE
+112,3159,Sri S.Suresh Kumar,UG,,7989001126,,Lecturer,,ECO
+113,3160,Ms.Sk.Rajiya Sulthana,UG,,9398281458,,Lecturer,,CSC
+114,3161,Ms.K.Naga Jyostna,UG,,7989781937,,Lecturer,,CSC
+115,3162,Sk.Raheem,UG,,9494814414,,Lecturer,,DSAI
+116,3163,M.Sravani,UG,,7702901977,,Lecturer,,DSAI
+117,3164,Smt.N.Lakshmi Kumari,UG,,6304787908,,Lecturer,,CSC
+118,3165,Smt.V.Kalpana,UG,,9989410208,,Lecturer,,COM
+119,3166,Smt.R.Gayathri Mallika,UG,,8903296807,,Lecturer,,STA
+120,3167,Ms.Sk.Parveena,UG,,8790120454,,Lecturer,,CSC
+121,3168,Ms.P.Daathri Sreevalli,UG,,9397952516,,Lecturer,,CSC
+122,3169,Dr.P.Sudarshan ,UG,,9110330742,,Lecturer,,COM
+123,3170,Sumith Roy,UG,,7989429370,,Lecturer,,DSAI
+124,3171,Sri K.Pruthvi,UG,,8008317899,,Lecturer,,HIN
+125,3172,Ms.K.Neelima,UG,,6301077312,,Lecturer,,DSAI
+126,3173,Ms.Ayesha Begum,UG,Female,9963447386,,Lecturer,,DSAI
+127,3174,Poulomi Khasnobis,UG,Female,6289893417,,Lecturer,,ECO
+128,3175,Ms.Ch.Keerthana,PG,Male,8074554567,,Lecturer,,MBABA
+129,3176,Ms.D.Sangeetha,PG,Female,9110710396,,Lecturer,,MBABA
+130,3177,Dr.P.Bala Durga Vara Prasad,UG,Female,7013643274,,Lecturer,,TEL
+131,3178,Dr.B.Geethika Sruthi,UG,Female,8790591708,,Lecturer,,HIN
+132,3179,Dr.K.Hemabandhavi,UG,Female,9701818859,,Lecturer,,TEL
+133,4048,Ms.J.Revathi,PG,Female,9705201910,,Lecturer,,DSAI
+134,5002,Prof.Rajesh C Jampala,PG,Male,9866806069,,"Professor, Dean(Academics) & HoD",,MBA
+135,5003,Dr.B.Jaya Prakash,PG,Female,9849813969,,"Associate Professor, HoD ",,MBABA
+136,5004,Dr.R.Srinivasa Rao,PG,Male,9849613143,,Associate Professor,,MBA
+137,5005,Dr.S.B.Rajendra Prasad,PG,Male,9440210697,,Associate Professor,,MBA
+138,5007,Dr.MD.S.Rahaman,PG,Female,9866965767,,Assistant Professor,,MBA
+139,5011,Dr.G.Srilatha     ,UG,Female,9030777264,,"Associate Professor, HoD",,ENG
+140,5012,Dr.K.Santha Kumari,UG,Female,7893633303,,Assistant Professor,,ENG
+141,5014,Sri I.V.Venkateswara Rao,UG,Female,9866007876,,"Sr.Assistant Professor, HoD ",,MAT
+142,5015,Dr.J.L.Rama Prasad,PG,Male,9441175955,,"Assistant Professor,  Dy HoD",,MAT
+143,5016,Dr.T.Anuradha,PG,Female,9160911922,,Assistant Professor,,MAT
+144,5018,Dr.T.S.Ravi kiran   ,PG,Female,9441176980,,"Associate Professor, HoD ",,CSC
+145,5022,Ms.K.Priya,PG,Male,7989782245,,Assistant Professor,,CSC
+146,5023,Smt.A.Kavitha,PG,Male,9493486272,,Assistant Professor,,CSC
+147,5026,Dr.M.Manoranjani,PG,Female,9866046499,,"Associate Professor, Vice Principal & HoD",,CHE
+148,5027,Dr.M.David Raju,PG,Female,9963036641,,Associate Professor,,CHE
+149,5028,Dr.T.N.V.S.S.Satya Dev,PG,Female,9440261355,,Assistant Professor,,CHE
+150,5029,Dr.P.T.S.R.K.Prasada Rao,UG,Female,9440179927,,"Assistanrt Professor, Dy HoD ",,CHE
+151,5030,Dr. M.Tasneem           ,PG,,9440494555/ 9441518746,,"Assistanrt Professor, Dy HoD ",,PHY
+152,5031,Dr.S.Vijaya Krishna,PG,,9000430219,,Assistant Professor,,PHY
+153,5032,Sri N.Raja Sekhar,UG,,9494531911,,Assistant Professor,,PHY
+154,5034,Smt.A.Siva Naga Lakshmi,PG,,9848919197,,Assistant Professor,,MBA
+155,5035,Sri G.Samrat Krishna,PG,,9177937461,,Assistant Professor,,CSC
+156,6027,Smt.K.Gayathri,PG,,8639765098,,Lecturer,,DSAI
