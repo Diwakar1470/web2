@@ -36,6 +36,33 @@ _console_handler.setFormatter(logging.Formatter('[%(asctime)s] %(levelname)s: %(
 logging.basicConfig(level=logging.INFO, handlers=[_file_handler, _console_handler])
 logger = logging.getLogger(__name__)
 
+# ============================================================================
+# TELEGRAM ALERT
+# Sends instant phone notification when server crashes
+# ============================================================================
+def send_telegram_alert(message: str):
+    """Send an alert message to Telegram. Fails silently so it never breaks the app."""
+    token = os.getenv('TELEGRAM_BOT_TOKEN')
+    chat_id = os.getenv('TELEGRAM_CHAT_ID')
+    if not token or not chat_id:
+        return  # Not configured, skip silently
+    try:
+        import urllib.request, urllib.parse, json as _json
+        payload = _json.dumps({
+            'chat_id': chat_id,
+            'text': message[:4000],  # Telegram max message length
+            'parse_mode': 'HTML'
+        }).encode('utf-8')
+        req = urllib.request.Request(
+            f'https://api.telegram.org/bot{token}/sendMessage',
+            data=payload,
+            headers={'Content-Type': 'application/json'}
+        )
+        urllib.request.urlopen(req, timeout=5)
+    except Exception:
+        pass  # Never let Telegram failure break the app
+
+
 APP_DIR = os.path.dirname(os.path.abspath(__file__))
 PARENT_DIR = os.path.dirname(APP_DIR)
 WEB_DIR = os.path.join(PARENT_DIR, 'web')
@@ -5675,7 +5702,7 @@ def serve_static(filename):
 
 @app.errorhandler(500)
 def handle_500(e):
-    """Log all 500 errors with full traceback to errors.log"""
+    """Log all 500 errors with full traceback to errors.log and send Telegram alert"""
     tb = traceback.format_exc()
     logger.error(
         f"500 Internal Server Error\n"
@@ -5683,12 +5710,17 @@ def handle_500(e):
         f"IP: {request.remote_addr}\n"
         f"Traceback:\n{tb}"
     )
+    send_telegram_alert(
+        f"\U0001f534 <b>500 Server Error</b>\n"
+        f"<b>URL:</b> {request.method} {request.path}\n"
+        f"<b>Error:</b> {str(e)[:200]}"
+    )
     return jsonify({'error': 'Internal server error', 'message': str(e)}), 500
 
 
 @app.errorhandler(Exception)
 def handle_exception(e):
-    """Catch ALL unhandled exceptions and log them"""
+    """Catch ALL unhandled exceptions, log them, and send Telegram alert"""
     if hasattr(e, 'code') and e.code in (404, 405):
         return e  # Let Flask handle HTTP errors normally
     tb = traceback.format_exc()
@@ -5697,6 +5729,12 @@ def handle_exception(e):
         f"URL: {request.method} {request.url}\n"
         f"IP: {request.remote_addr}\n"
         f"Traceback:\n{tb}"
+    )
+    send_telegram_alert(
+        f"\U0001f6a8 <b>Unhandled Exception</b>\n"
+        f"<b>Type:</b> {type(e).__name__}\n"
+        f"<b>URL:</b> {request.method} {request.path}\n"
+        f"<b>Error:</b> {str(e)[:200]}"
     )
     return jsonify({'error': 'Unexpected error', 'message': str(e)}), 500
 
