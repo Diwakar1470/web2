@@ -1,6 +1,7 @@
 import os
 import logging
 import traceback
+import random
 from logging.handlers import RotatingFileHandler
 from flask import Flask, request, jsonify, send_from_directory, session
 from flask_cors import CORS
@@ -61,6 +62,13 @@ def send_telegram_alert(message: str):
         urllib.request.urlopen(req, timeout=5)
     except Exception:
         pass  # Never let Telegram failure break the app
+
+
+def generate_error_id():
+    """Generate a unique Error ID shown to the user and included in Telegram alerts."""
+    now = datetime.utcnow()
+    rand = random.randint(1000, 9999)
+    return f"ERR-{now.strftime('%Y%m%d-%H%M')}-{rand}"
 
 
 APP_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -630,11 +638,56 @@ def serve_index():
 @app.route('/api/health', methods=['GET'])
 def health():
     try:
-        # Check database connection
         db.session.execute(db.text('SELECT 1'))
-        return jsonify({"status": "ok", "database": "connected"})
+        return jsonify({
+            'status': 'ok',
+            'database': 'connected',
+            'timestamp': datetime.utcnow().isoformat()
+        }), 200
     except Exception as e:
-        return jsonify({"status": "error", "details": str(e)}), 500
+        logger.error(f"Health check failed: {str(e)}")
+        return jsonify({
+            'status': 'error',
+            'database': 'disconnected',
+            'timestamp': datetime.utcnow().isoformat(),
+            'detail': str(e)
+        }), 503
+
+
+@app.route('/api/log-frontend-error', methods=['POST'])
+def log_frontend_error():
+    """Receives JS/network errors from the browser and logs them."""
+    try:
+        data = request.get_json(silent=True) or {}
+        error_id = generate_error_id()
+        error_type = data.get('type', 'unknown')
+        message = data.get('message', 'No message')[:500]
+        url = data.get('url', 'Unknown URL')
+        user_id = data.get('userId', 'anonymous')
+        timestamp = data.get('timestamp', datetime.utcnow().isoformat())
+
+        logger.warning(
+            f"[{error_id}] FRONTEND {error_type.upper()}\n"
+            f"User: {user_id} | Page: {url}\n"
+            f"Message: {message}\n"
+            f"Source: {data.get('source', 'N/A')} line {data.get('line', '?')}\n"
+            f"Time: {timestamp}"
+        )
+
+        # Send Telegram only for serious frontend errors
+        if error_type in ('js_error', 'api_500'):
+            send_telegram_alert(
+                f"\u26a0\ufe0f Frontend Error \u2014 NSS Portal\n"
+                f"\U0001f194 {error_id}\n"
+                f"\U0001f464 User: {user_id}\n"
+                f"\U0001f310 Page: {url}\n"
+                f"\u274c {error_type}: {message}"
+            )
+
+        return jsonify({'logged': True, 'errorId': error_id}), 200
+    except Exception as e:
+        logger.error(f"Failed to log frontend error: {str(e)}")
+        return jsonify({'logged': False}), 200  # Always 200 to avoid infinite loops
 
 
 # Authentication Endpoints
@@ -5700,68 +5753,96 @@ def serve_static(filename):
 # ERROR HANDLERS
 # ============================================================================
 
+@app.errorhandler(404)
+def handle_404(e):
+    if request.path.startswith('/api/'):
+        return jsonify({'error': 'Endpoint not found', 'path': request.path}), 404
+    # Try serving the actual file first
+    try:
+        return send_from_directory(WEB_DIR, request.path.lstrip('/'))
+    except Exception:
+        pass
+    # Fall back to beautiful 404 page
+    try:
+        return send_from_directory(os.path.join(WEB_DIR, 'pages', 'errors'), '404.html'), 404
+    except Exception:
+        return jsonify({'error': 'Not found'}), 404
+
+
+@app.errorhandler(403)
+def handle_403(e):
+    if request.path.startswith('/api/'):
+        return jsonify({'error': 'Access denied'}), 403
+    try:
+        return send_from_directory(os.path.join(WEB_DIR, 'pages', 'errors'), '403.html'), 403
+    except Exception:
+        return jsonify({'error': 'Forbidden'}), 403
+
+
 @app.errorhandler(500)
 def handle_500(e):
-    """Log all 500 errors with full traceback to errors.log and send Telegram alert"""
+    error_id = generate_error_id()
     tb = traceback.format_exc()
     logger.error(
-        f"500 Internal Server Error\n"
+        f"[{error_id}] 500 Internal Server Error\n"
         f"URL: {request.method} {request.url}\n"
         f"IP: {request.remote_addr}\n"
         f"Traceback:\n{tb}"
     )
     send_telegram_alert(
-        f"\U0001f534 <b>500 Server Error</b>\n"
-        f"<b>URL:</b> {request.method} {request.path}\n"
-        f"<b>Error:</b> {str(e)[:200]}"
+        f"\U0001f534 500 Error \u2014 NSS Portal\n"
+        f"\U0001f194 Error ID: {error_id}\n"
+        f"\U0001f310 {request.method} {request.path}\n"
+        f"\U0001f4cd IP: {request.remote_addr}\n"
+        f"\u274c {str(e)[:200]}"
     )
-    return jsonify({'error': 'Internal server error', 'message': str(e)}), 500
+    if request.path.startswith('/api/'):
+        return jsonify({'error': 'Internal server error', 'errorId': error_id}), 500
+    try:
+        return send_from_directory(os.path.join(WEB_DIR, 'pages', 'errors'), '500.html'), 500
+    except Exception:
+        return jsonify({'error': 'Server error', 'errorId': error_id}), 500
 
 
 @app.errorhandler(Exception)
 def handle_exception(e):
-    """Catch ALL unhandled exceptions, log them, and send Telegram alert"""
-    if hasattr(e, 'code') and e.code in (404, 405):
-        return e  # Let Flask handle HTTP errors normally
+    if hasattr(e, 'code'):
+        if e.code == 404: return handle_404(e)
+        if e.code == 403: return handle_403(e)
+        if e.code == 500: return handle_500(e)
+        return e
+    error_id = generate_error_id()
     tb = traceback.format_exc()
     logger.error(
-        f"Unhandled Exception: {type(e).__name__}: {str(e)}\n"
+        f"[{error_id}] Unhandled {type(e).__name__}: {str(e)}\n"
         f"URL: {request.method} {request.url}\n"
         f"IP: {request.remote_addr}\n"
         f"Traceback:\n{tb}"
     )
     send_telegram_alert(
-        f"\U0001f6a8 <b>Unhandled Exception</b>\n"
-        f"<b>Type:</b> {type(e).__name__}\n"
-        f"<b>URL:</b> {request.method} {request.path}\n"
-        f"<b>Error:</b> {str(e)[:200]}"
+        f"\U0001f4a5 Unhandled Exception \u2014 NSS Portal\n"
+        f"\U0001f194 Error ID: {error_id}\n"
+        f"\U0001f310 {request.method} {request.path}\n"
+        f"\U0001f464 IP: {request.remote_addr}\n"
+        f"\u274c {type(e).__name__}: {str(e)[:200]}\n"
+        f"\U0001f4c4 {tb.strip().splitlines()[-1] if tb.strip() else 'N/A'}"
     )
-    return jsonify({'error': 'Unexpected error', 'message': str(e)}), 500
+    if request.path.startswith('/api/'):
+        return jsonify({'error': 'Unexpected error', 'errorId': error_id}), 500
+    try:
+        return send_from_directory(os.path.join(WEB_DIR, 'pages', 'errors'), '500.html'), 500
+    except Exception:
+        return jsonify({'error': 'Server error', 'errorId': error_id}), 500
 
 
 @app.after_request
 def log_response_errors(response):
-    """Log 4xx and 5xx HTTP responses"""
     if response.status_code >= 400:
         logger.warning(
-            f"HTTP {response.status_code} — {request.method} {request.path} "
+            f"HTTP {response.status_code} \u2014 {request.method} {request.path} "
             f"[IP: {request.remote_addr}]"
         )
     return response
-
-
-@app.errorhandler(404)
-def handle_404(e):
-    """Handle 404 errors by returning index.html for client-side routing"""
-    # Try to serve the requested file
-    try:
-        return send_from_directory(WEB_DIR, request.path.lstrip('/'))
-    except:
-        # If file not found, return index.html for single-page app
-        try:
-            return send_from_directory(WEB_DIR, 'index.html')
-        except:
-            return jsonify({'error': 'File not found'}), 404
 
 
 if __name__ == '__main__':
